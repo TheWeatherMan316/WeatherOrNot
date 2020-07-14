@@ -10,12 +10,16 @@ function App() {
   const [bar, setBar] = useState("--");
 
   let tempCalc = () => {
-    setTemp((Math.random() * (40 - -20) + -20).toFixed(1).toString());
+    setTemp(getRandomValue(-20, 40, 1));
   };
 
   let barCalc = () => {
-    setBar((Math.random() * (1050 - 980) + 980).toFixed(0).toString());
+    setBar(getRandomValue(980, 1050, 0));
   };
+
+  function getRandomValue(min, max, precision) {
+    return (Math.random() * (max - min) + min).toFixed(precision).toString();
+  }
 
   return (
     <div className="app" align="center">
