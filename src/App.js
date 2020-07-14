@@ -22,11 +22,7 @@ function App() {
       <div className="container">
         <Header />
         <TempInterface display={temp} measure={tempCalc} label="Temperature" />
-        <BarInterface
-          display={bar}
-          measure={barCalc}
-          label="Barometric Pressure"
-        />
+        <BarInterface display={bar} measure={barCalc} label="Barometric Pressure" />
         {console.log(temp)}
       </div>
     </div>

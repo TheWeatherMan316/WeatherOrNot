@@ -1,8 +1,8 @@
 .container {
   margin-top: 15px;
-  max-width: 350px;
-  background-color: #e5e5e5;
-  border: 2px solid darkgray;
+  max-width: 500px;
+  background-color: #637d96;
+  border: 1px solid #2b3a44;
   border-radius: 17px;
   display: grid;
   grid-template-columns: 1fr;
@@ -32,16 +32,19 @@
 
 .header {
   grid-area: a;
+  color: #d2aa6d;
+  text-shadow: 0 0 1px #59191f;
 }
 
 .label {
   grid-area: label;
+  color: gainsboro;
 }
 
 .display {
   grid-area: display;
   background-color: gainsboro;
-  border: 2px solid darkgray;
+  border: 1px solid #2b3a44;
   border-radius: 12px;
   box-shadow: 1px 1px 1px #606060;
 }

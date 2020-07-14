@@ -5,7 +5,7 @@ import Label from "./Interface/Label";
 
 export default function BarInterface(props) {
   return (
-    <div className="Interface">
+    <div className="Interface" id="bar">
       <Label label={props.label} />
       <Display display={props.display} unit="mbar" />
       <Controls measure={props.measure} />
