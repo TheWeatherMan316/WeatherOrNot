@@ -4,45 +4,31 @@
   background-color: #637d96;
   border: 1px solid #2b3a44;
   border-radius: 17px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 1px 1px;
-  grid-template-areas: "a" "b" "c";
+
   align-items: center;
   box-shadow: 3px 3px 3px #606060;
 }
 
-.Interface #temp {
-  grid-area: b;
-}
-
-.Interface #bar {
-  grid-area: c;
-}
-
 .Interface {
-  display: grid;
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 1px 1px;
-  grid-template-areas: "label display controls";
 }
 
 .header {
-  grid-area: a;
   color: #d2aa6d;
   text-shadow: 0 0 1px #59191f;
 }
 
 .label {
-  grid-area: label;
+  width: 50%;
   color: gainsboro;
 }
 
 .display {
-  grid-area: display;
+  width: 30%;
   background-color: gainsboro;
   border: 1px solid #2b3a44;
   border-radius: 12px;
@@ -50,5 +36,5 @@
 }
 
 .controls {
-  grid-area: controls;
+  width: 20%;
 }

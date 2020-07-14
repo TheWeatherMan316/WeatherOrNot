@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Header from "./components/Header";
-import TempInterface from "./components/TempInterface";
-import BarInterface from "./components/BarInterface";
+import Interface from "./components/Interface";
 
 import "./App.css";
 
@@ -25,8 +24,8 @@ function App() {
     <div className="app" align="center">
       <div className="container">
         <Header />
-        <TempInterface display={temp} measure={tempCalc} label="Temperature" />
-        <BarInterface display={bar} measure={barCalc} label="Barometric Pressure" />
+        <Interface display={temp} measure={tempCalc} unit="°C" label="Temperature" />
+        <Interface display={bar} measure={barCalc} unit="mbar" label="Barometric Pressure" />
         {console.log(temp)}
       </div>
     </div>
