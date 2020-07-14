@@ -4,7 +4,7 @@ export default function Display(props) {
   return (
     <div className="display">
       <p>
-        <b>{props.temperature}°C</b>
+        <b>{props.display}{props.unit}</b>
       </p>
     </div>
   );

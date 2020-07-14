@@ -1,40 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
-import Label from "./components/Interface/Label";
-import Display from "./components/Interface/Display";
-import Controls from "./components/Interface/Controls";
+import TempInterface from "./components/TempInterface";
+import BarInterface from "./components/BarInterface";
+
 import "./App.css";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      temperature: "--",
-    };
-    this.setTemp = this.setTemp.bind(this);
-  }
+function App() {
+  const [temp, setTemp] = useState("--");
+  const [bar, setBar] = useState("--");
 
-  setTemp = () => {
-    let min = -20;
-    let max = 40;
-    let randNum = (Math.random() * (max - min) + min).toFixed(1).toString();
-    this.setState((prevTemp) => {
-      return { temperature: randNum };
-    });
+  let tempCalc = () => {
+    setTemp((Math.random() * (40 - -20) + -20).toFixed(1).toString());
   };
 
-  render() {
-    return (
-      <div className="app" align="center">
-        <div className="container">
-          <Header />
-          <Label />
-          <Display temperature={this.state.temperature} />
-          <Controls measure={this.setTemp} />
-        </div>
+  let barCalc = () => {
+    setBar((Math.random() * (1050 - 980) + 980).toFixed(0).toString());
+  };
+
+  return (
+    <div className="app" align="center">
+      <div className="container">
+        <Header />
+        <TempInterface display={temp} measure={tempCalc} label="Temperature" />
+        <BarInterface
+          display={bar}
+          measure={barCalc}
+          label="Barometric Pressure"
+        />
+        {console.log(temp)}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;

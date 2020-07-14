@@ -5,16 +5,37 @@
   border: 2px solid darkgray;
   border-radius: 17px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 1px 1px;
-  grid-template-areas: "header header header" "label display controls";
+  grid-template-areas: "a" "b" "c";
   align-items: center;
   box-shadow: 3px 3px 3px #606060;
 }
 
+.Interface #temp {
+  grid-area: b;
+}
+
+.Interface #bar {
+  grid-area: c;
+}
+
+.Interface {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 1px 1px;
+  grid-template-areas: "label display controls";
+}
+
 .header {
-  grid-area: header;
+  grid-area: a;
+}
+
+.label {
+  grid-area: label;
 }
 
 .display {
@@ -23,10 +44,6 @@
   border: 2px solid darkgray;
   border-radius: 12px;
   box-shadow: 1px 1px 1px #606060;
-}
-
-.label {
-  grid-area: label;
 }
 
 .controls {
