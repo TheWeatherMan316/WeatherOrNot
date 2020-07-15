@@ -24,7 +24,10 @@ function App() {
   useEffect(() => {
     setInterval(() => {
       tempCalc();
-    }, 6000);
+    }, 1000);
+    setInterval(() => {
+      barCalc();
+    }, 5000);
   }, []);
 
   return (
