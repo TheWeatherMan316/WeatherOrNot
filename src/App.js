@@ -23,9 +23,7 @@ function App() {
   // Calculation of average temperature
   function averageCalc(temperature) {
     let latest = temperature;
-    console.log(tempArr);
     tempArr.push(latest);
-    console.log(tempArr);
     let sum = tempArr.reduce((a, b) => a + b, 0);
 
     let avTemp = sum / tempArr.length;
@@ -52,6 +50,11 @@ function App() {
     averageCalc(temp);
   }, [temp]);
 
+  // useEffect(() => {
+    
+
+  // }, [bar])
+
   return (
     <div className="app" align="center">
       <div className="container">
@@ -62,12 +65,14 @@ function App() {
           unit="°C"
           label="Temperature"
           button={true}
+          trend={false}
         />
         <Interface
           display={av.toFixed(1).toString()}
           unit="°C Ø"
           label="Average Temperature"
           button={false}
+          trend={false}
         />
         <Interface
           display={bar.toFixed(0).toString()}
@@ -75,6 +80,15 @@ function App() {
           unit="mbar"
           label="Barometric Pressure"
           button={true}
+          trend={false}
+        />
+                <Interface
+          display={"falling"}
+          unit=" "
+          label="Barometric Pressure Trend"
+          button={false}
+          trend={true}
+          tendency="rising"
         />
       </div>
     </div>

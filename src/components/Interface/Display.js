@@ -1,13 +1,23 @@
 import React from "react";
 
 export default function Display(props) {
-  return (
-    <div className="display">
-      <p>
-        <b>
-          {props.display} {props.unit}
-        </b>
-      </p>
-    </div>
-  );
+  if (props.trend === false) {
+    return (
+      <div className="display">
+        <p>
+          <b>
+            {props.display} {props.unit}
+          </b>
+        </p>
+      </div>
+    );
+  } else {
+    return (
+      <div className="display">
+        <p>
+          <b>{props.display}</b>
+        </p>
+      </div>
+    );
+  }
 }
