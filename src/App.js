@@ -40,8 +40,6 @@ function App() {
     barArr.push(latest);
     barArr.shift();
     let difference = barArr[1] - barArr[0];
-    console.log(difference);
-
     if (difference >= 4) {
       setTend("rising");
     }
@@ -51,6 +49,7 @@ function App() {
     if (difference < -4) {
       setTend("falling");
     }
+    console.log(difference)
   }
 
   // create random value
@@ -112,7 +111,6 @@ function App() {
           tendency={tend}
         />
       </div>
-      <p>{tend}</p>
     </div>
   );
 }
