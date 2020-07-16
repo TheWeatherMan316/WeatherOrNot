@@ -1,38 +1,13 @@
 import React from "react";
-import fallIcon from "./fall.png";
-import stableIcon from "./stable.png";
-import riseIcon from "./rise.png";
+import UnitValue from "./Display/UnitValue";
+import TrendValue from "./Display/TrendValue";
 
 export default function Display(props) {
-  // Set Icon
-
-  let icon;
-  if (props.tendency === "rising") {
-    icon = riseIcon;
-  }
-  if (props.tendency === "stable") {
-    icon = stableIcon;
-  }
-  if (props.tendency === "falling") {
-    icon = fallIcon;
-  }
-
-  if (props.trend === false) {
+  if (!props.trend) {
     return (
-      <div className="display">
-        <p>
-          <b>
-            {props.display} {props.unit}
-          </b>
-        </p>
-      </div>
+      <UnitValue value={props.value} unit={props.unit} />
     );
   } else {
-    return (
-      <div className="display" id="trend">
-          <img className="arrow" src={icon} alt="arrow"></img>
-          <p className="tendencyText"><b>{props.tendency}</b></p>
-      </div>
-    );
+    return <TrendValue trend={props.trend} />;
   }
 }

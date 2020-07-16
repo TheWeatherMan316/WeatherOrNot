@@ -48,16 +48,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 img.arrow {
   width: 12%;
   height: 12%;
-}
-
-p.tendencyText {
-  text-align: center;
 }
 
 .controls {

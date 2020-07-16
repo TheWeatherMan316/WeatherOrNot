@@ -8,14 +8,14 @@ export default function Interface(props) {
   return (
     <div className="Interface">
       <Label label={props.label} />
-      <Display display={props.display} unit={props.unit} trend={props.trend} />
+      <Display value={props.value} unit={props.unit} />
       <Controls measure={props.measure} />
     </div>
   );} else {
     return (
       <div className="Interface">
         <Label label={props.label} />
-        <Display display={props.display} unit={props.unit} trend={props.trend} tendency={props.tendency} />
+        <Display value={props.value} unit={props.unit} trend={props.trend} />
         <div className="controls"></div>
       </div>);
   }

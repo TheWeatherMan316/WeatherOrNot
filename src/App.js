@@ -11,10 +11,9 @@ function App() {
   // states
   const [temp, setTemp] = useState(0);
   const [bar, setBar] = useState(0);
-  const [av, setAv] = useState(0);
-  const [tend, setTend] = useState("stable");
+  const [average, setAverage] = useState(0);
+  const [trend, setTrend] = useState("stable");
 
-  // simulation of temp measure
   let tempCalc = () => {
     setTemp(getRandomValue(-20, 40));
   };
@@ -36,7 +35,7 @@ function App() {
 
     let avTemp = sum / tempArr.length;
 
-    setAv(avTemp);
+    setAverage(avTemp);
   }
 
   // Calculation of barometric tendency
@@ -58,19 +57,19 @@ function App() {
      console.log(gradient)
     
     if (tempDifference >= 4 && gradient >= standardGradient) {
-      setTend("rising");
-    }
+      setTrend("rising");
+    } else
     if (tempDifference >= 4 && gradient < standardGradient) {
-      setTend("stable");
-    }
+      setTrend("stable");
+    } else
     if (tempDifference < 4 && tempDifference > -4) {
-      setTend("stable");
-    }
-    if (tempDifference < -4  && gradient < standardGradient) {
-      setTend("stable");
-    }
-    if (tempDifference < -4  && gradient >= standardGradient) {
-      setTend("falling");
+      setTrend("stable");
+    } else 
+    if (tempDifference <= -4  && gradient < standardGradient) {
+      setTrend("stable");
+    } else 
+    if (tempDifference <= -4  && gradient >= standardGradient) {
+      setTrend("falling");
     }
   }
 
@@ -102,35 +101,30 @@ function App() {
       <div className="container">
         <Header />
         <Interface
-          display={temp.toFixed(1).toString()}
+          value={temp.toFixed(1).toString()}
           measure={tempCalc}
           unit="°C"
           label="Temperature"
           button={true}
-          trend={false}
         />
         <Interface
-          display={av.toFixed(1).toString()}
+          value={average.toFixed(1).toString()}
           unit="°C Ø"
           label="Average Temperature"
           button={false}
-          trend={false}
         />
         <Interface
-          display={bar.toFixed(0).toString()}
+          value={bar.toFixed(0).toString()}
           measure={barCalc}
           unit="mbar"
           label="Barometric Pressure"
           button={true}
-          trend={false}
         />
         <Interface
-          display={"falling"}
           unit=" "
           label="Barometric Pressure Trend"
           button={false}
-          trend={true}
-          tendency={tend}
+          trend={trend}
         />
       </div>
     </div>
