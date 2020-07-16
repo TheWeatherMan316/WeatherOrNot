@@ -44,6 +44,22 @@
   box-shadow: 1px 1px 1px #606060;
 }
 
+.display#trend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+img.arrow {
+  width: 12%;
+  height: 12%;
+}
+
+p.tendencyText {
+  text-align: center;
+}
+
 .controls {
   width: 20%;
 }

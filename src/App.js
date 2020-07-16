@@ -5,6 +5,7 @@ import Interface from "./components/Interface";
 import "./App.css";
 let tempArr = [];
 let barArr = [0, 0];
+let barTimestampArr = [0, 0];
 
 function App() {
   // states
@@ -21,6 +22,10 @@ function App() {
   // simulation of bar measure
   let barCalc = () => {
     setBar(getRandomValue(980, 1050));
+    let timestamp = Date.now();
+      // Queue of timestamps
+      barTimestampArr.push(timestamp);
+      barTimestampArr.shift();
   };
 
   // Calculation of average temperature
@@ -36,20 +41,37 @@ function App() {
 
   // Calculation of barometric tendency
   function tendencyCalc(barometricPressure) {
+    // Queue of bar-values
     let latest = barometricPressure;
     barArr.push(latest);
     barArr.shift();
-    let difference = barArr[1] - barArr[0];
-    if (difference >= 4) {
+    
+    let tempDifference = barArr[1] - barArr[0];
+    let timeDifference = barTimestampArr[1] - barTimestampArr[0];
+
+    // standard: 10 mbar per 10 seconds (10000ms) => rise: 0.001
+    const standardBarDiff = 10;
+    const standardTimeDiff = 10000;
+    let standardGradient = Math.abs(standardBarDiff/standardTimeDiff);
+
+    let gradient = Math.abs(tempDifference / timeDifference);
+     console.log(gradient)
+    
+    if (tempDifference >= 4 && gradient >= standardGradient) {
       setTend("rising");
     }
-    if (difference < 4 && difference > -4) {
+    if (tempDifference >= 4 && gradient < standardGradient) {
       setTend("stable");
     }
-    if (difference < -4) {
+    if (tempDifference < 4 && tempDifference > -4) {
+      setTend("stable");
+    }
+    if (tempDifference < -4  && gradient < standardGradient) {
+      setTend("stable");
+    }
+    if (tempDifference < -4  && gradient >= standardGradient) {
       setTend("falling");
     }
-    console.log(difference)
   }
 
   // create random value
