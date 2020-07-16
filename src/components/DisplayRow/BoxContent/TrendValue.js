@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import fallIcon from "./fall.png";
 import stableIcon from "./stable.png";
 import riseIcon from "./rise.png";
@@ -16,13 +16,12 @@ export default function TrendValue(props) {
     icon = fallIcon;
   }
 
-
   return (
-    <div className="display" id="trend">
+    <Fragment>
       <img className="arrow" src={icon} alt="arrow"></img>
       <p className="trendText">
         <b>{props.trend}</b>
       </p>
-    </div>
+    </Fragment>
   );
 }

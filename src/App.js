@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
-import Interface from "./components/DisplayRow";
+import DisplayRow from "./components/DisplayRow";
+import TrendValue from "./components/DisplayRow/BoxContent/TrendValue";
+import UnitValue from "./components/DisplayRow/BoxContent/UnitValue";
+import Controls from "./components/DisplayRow/Controls";
 
 import "./App.css";
 let tempArr = [];
@@ -8,53 +11,49 @@ let barArr = [0, 0];
 let barTimestampArr = [0, 0];
 
 function App() {
-  // states
+ 
   const [temp, setTemp] = useState(0);
   const [bar, setBar] = useState(0);
-  const [average, setAverage] = useState(0);
+  const [averageTemp, setAverageTemp] = useState(0);
   const [trend, setTrend] = useState("stable");
 
-  let tempCalc = () => {
+  let measureTemp = () => {
     setTemp(getRandomValue(-20, 40));
   };
 
-  // simulation of bar measure
-  let barCalc = () => {
-     setBar(getRandomValue(980, 1050));
-    // Queue of timestamps
+  let measureBar = () => {
+    setBar(getRandomValue(980, 1050));
     let timestamp = Date.now();
     barTimestampArr.push(timestamp);
     barTimestampArr.shift();
   };
 
-  // Calculation of average temperature
-  function averageCalc(temperature) {
+  function calcAverageTemp(temperature) {
     let latest = temperature;
     tempArr.push(latest);
     let sum = tempArr.reduce((a, b) => a + b, 0);
 
-    let avTemp = sum / tempArr.length;
+    let averageTemp = sum / tempArr.length;
 
-    setAverage(avTemp);
+    setAverageTemp(averageTemp);
   }
 
-  // Calculation of barometric tendency
-  function tendencyCalc(barometricPressure) {
-    // Queue of bar-values
+  function calcBarTrend(barometricPressure) { 
+
     let latest = barometricPressure;
     barArr.push(latest);
-    barArr.shift(); 
+    barArr.shift();
 
     let tempDifference = barArr[1] - barArr[0];
     let timeDifference = barTimestampArr[1] - barTimestampArr[0];
 
-    // standard: 10 mbar per 10 seconds (10000ms) => rise: 0.001
+    
     const standardBarDiff = 10;
     const standardTimeDiff = 10000;
     let standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
-
+    // standardGradient: 0.001
+    
     let gradient = Math.abs(tempDifference / timeDifference);
-    console.log(gradient);
 
     if (tempDifference >= 4 && gradient >= standardGradient) {
       setTrend("rising");
@@ -77,47 +76,45 @@ function App() {
   // timers for automatic measure
   useEffect(() => {
     setInterval(() => {
-      tempCalc();
+      measureTemp();
     }, 1000);
     setInterval(() => {
-      barCalc();
+      measureBar();
     }, 5000);
   }, []);
 
   useEffect(() => {
-    averageCalc(temp);
+    calcAverageTemp(temp);
   }, [temp]);
 
   useEffect(() => {
-    tendencyCalc(bar);
+    calcBarTrend(bar);
   }, [bar]);
 
   return (
     <div className="app" align="center">
       <div className="container">
         <Header />
-        <Interface
-          value={temp.toFixed(1).toString()}
-          measure={tempCalc}
-          unit="°C"
+        <DisplayRow
           label="Temperature"
-          button={true}
+          display={<UnitValue value={temp.toFixed(1).toString()} unit="°C Ø" />}
+          controls={<Controls measure={measureTemp} />}
         />
-        <Interface
-          value={average.toFixed(1).toString()}
-          unit="°C Ø"
+        <DisplayRow
           label="Average Temperature"
-          button={false}
-          display={<h1>Hello</h1>}
+          display={<UnitValue value={averageTemp.toFixed(1).toString()} unit="°C" />}
+          controls={<div className="controls"></div>}
         />
-        <Interface
-          value={bar.toFixed(0).toString()}
-          measure={barCalc}
-          unit="mbar"
+        <DisplayRow
           label="Barometric Pressure"
-          button={true}
+          display={<UnitValue value={bar.toFixed(0).toString()} unit="mbar" />}
+          controls={<Controls measure={measureBar} />}
         />
-        <Interface unit=" " label="Barometric Pressure Trend" button={false} trend={trend} />
+        <DisplayRow
+          label="Barometric Pressure Trend"
+          display={<TrendValue trend={trend} />}
+          controls={<div className="controls"></div>}
+        />
       </div>
     </div>
   );

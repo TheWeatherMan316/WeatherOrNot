@@ -8,7 +8,7 @@
   box-shadow: 3px 3px 3px #606060;
 }
 
-.Interface {
+.DisplayRow {
   margin-bottom: 10px;
   display: flex;
   flex-flow: row nowrap;
@@ -36,20 +36,18 @@
   width: 7%;
 }
 
-.display {
+.BoxContent {
   width: 30%;
   background-color: gainsboro;
   border: 1px solid #2b3a44;
   border-radius: 12px;
   box-shadow: 1px 1px 1px #606060;
-}
-
-.display#trend {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
 }
+
 
 img.arrow {
   width: 12%;
