@@ -15,7 +15,7 @@ export default function Display(props) {
     return (
       <div className="display">
         <p>
-          <b>{props.display}</b>
+          <b>{props.tendency}</b>
         </p>
       </div>
     );

@@ -4,11 +4,14 @@ import Interface from "./components/Interface";
 
 import "./App.css";
 let tempArr = [];
+let barArr = [0, 0];
+
 function App() {
   // states
   const [temp, setTemp] = useState(0);
   const [bar, setBar] = useState(0);
   const [av, setAv] = useState(0);
+  const [tend, setTend] = useState("stable");
 
   // simulation of temp measure
   let tempCalc = () => {
@@ -31,6 +34,25 @@ function App() {
     setAv(avTemp);
   }
 
+  // Calculation of barometric tendency
+  function tendencyCalc(barometricPressure) {
+    let latest = barometricPressure;
+    barArr.push(latest);
+    barArr.shift();
+    let difference = barArr[1] - barArr[0];
+    console.log(difference);
+
+    if (difference >= 4) {
+      setTend("rising");
+    }
+    if (difference < 4 && difference > -4) {
+      setTend("stable");
+    }
+    if (difference < -4) {
+      setTend("falling");
+    }
+  }
+
   // create random value
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
@@ -50,10 +72,9 @@ function App() {
     averageCalc(temp);
   }, [temp]);
 
-  // useEffect(() => {
-    
-
-  // }, [bar])
+  useEffect(() => {
+    tendencyCalc(bar);
+  }, [bar]);
 
   return (
     <div className="app" align="center">
@@ -82,15 +103,16 @@ function App() {
           button={true}
           trend={false}
         />
-                <Interface
+        <Interface
           display={"falling"}
           unit=" "
           label="Barometric Pressure Trend"
           button={false}
           trend={true}
-          tendency="rising"
+          tendency={tend}
         />
       </div>
+      <p>{tend}</p>
     </div>
   );
 }

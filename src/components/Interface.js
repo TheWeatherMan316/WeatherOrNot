@@ -15,7 +15,7 @@ export default function Interface(props) {
     return (
       <div className="Interface">
         <Label label={props.label} />
-        <Display display={props.display} unit={props.unit} />
+        <Display display={props.display} unit={props.unit} trend={props.trend} tendency={props.tendency} />
         <div className="controls"></div>
       </div>);
   }
