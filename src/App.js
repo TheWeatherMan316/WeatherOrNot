@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
-import Interface from "./components/Interface";
+import Interface from "./components/DisplayRow";
 
 import "./App.css";
 let tempArr = [];
@@ -20,11 +20,11 @@ function App() {
 
   // simulation of bar measure
   let barCalc = () => {
-    setBar(getRandomValue(980, 1050));
+     setBar(getRandomValue(980, 1050));
+    // Queue of timestamps
     let timestamp = Date.now();
-      // Queue of timestamps
-      barTimestampArr.push(timestamp);
-      barTimestampArr.shift();
+    barTimestampArr.push(timestamp);
+    barTimestampArr.shift();
   };
 
   // Calculation of average temperature
@@ -43,32 +43,28 @@ function App() {
     // Queue of bar-values
     let latest = barometricPressure;
     barArr.push(latest);
-    barArr.shift();
-    
+    barArr.shift(); 
+
     let tempDifference = barArr[1] - barArr[0];
     let timeDifference = barTimestampArr[1] - barTimestampArr[0];
 
     // standard: 10 mbar per 10 seconds (10000ms) => rise: 0.001
     const standardBarDiff = 10;
     const standardTimeDiff = 10000;
-    let standardGradient = Math.abs(standardBarDiff/standardTimeDiff);
+    let standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
 
     let gradient = Math.abs(tempDifference / timeDifference);
-     console.log(gradient)
-    
+    console.log(gradient);
+
     if (tempDifference >= 4 && gradient >= standardGradient) {
       setTrend("rising");
-    } else
-    if (tempDifference >= 4 && gradient < standardGradient) {
+    } else if (tempDifference >= 4 && gradient < standardGradient) {
       setTrend("stable");
-    } else
-    if (tempDifference < 4 && tempDifference > -4) {
+    } else if (tempDifference < 4 && tempDifference > -4) {
       setTrend("stable");
-    } else 
-    if (tempDifference <= -4  && gradient < standardGradient) {
+    } else if (tempDifference <= -4 && gradient < standardGradient) {
       setTrend("stable");
-    } else 
-    if (tempDifference <= -4  && gradient >= standardGradient) {
+    } else if (tempDifference <= -4 && gradient >= standardGradient) {
       setTrend("falling");
     }
   }
@@ -112,6 +108,7 @@ function App() {
           unit="°C Ø"
           label="Average Temperature"
           button={false}
+          display={<h1>Hello</h1>}
         />
         <Interface
           value={bar.toFixed(0).toString()}
@@ -120,12 +117,7 @@ function App() {
           label="Barometric Pressure"
           button={true}
         />
-        <Interface
-          unit=" "
-          label="Barometric Pressure Trend"
-          button={false}
-          trend={trend}
-        />
+        <Interface unit=" " label="Barometric Pressure Trend" button={false} trend={trend} />
       </div>
     </div>
   );
