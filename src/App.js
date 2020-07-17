@@ -68,12 +68,10 @@ function App() {
     }
   }
 
-  // create random value
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
   }
 
-  // timers for automatic measure
   useEffect(() => {
     setInterval(() => {
       measureTemp();
@@ -82,6 +80,10 @@ function App() {
       measureBar();
     }, 5000);
   }, []);
+
+  // useEffect -> arrays, später gemeinsames Objekt in Array
+
+
 
   useEffect(() => {
     calcAverageTemp(temp);
@@ -98,22 +100,22 @@ function App() {
         <DisplayRow
           label="Temperature"
           display={<UnitValue value={temp.toFixed(1).toString()} unit="°C Ø" />}
-          controls={<Controls measure={measureTemp} />}
+          action={<Controls measure={measureTemp} />}
         />
         <DisplayRow
           label="Average Temperature"
           display={<UnitValue value={averageTemp.toFixed(1).toString()} unit="°C" />}
-          controls={<div className="controls"></div>}
+          action={<div className="controls"></div>}
         />
         <DisplayRow
           label="Barometric Pressure"
           display={<UnitValue value={bar.toFixed(0).toString()} unit="mbar" />}
-          controls={<Controls measure={measureBar} />}
+          action={<Controls measure={measureBar} />}
         />
         <DisplayRow
           label="Barometric Pressure Trend"
           display={<TrendValue trend={trend} />}
-          controls={<div className="controls"></div>}
+          action={<div className="controls"></div>}
         />
       </div>
     </div>

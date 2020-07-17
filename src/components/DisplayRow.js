@@ -9,7 +9,7 @@ export default function DisplayRow(props) {
       <Label label={props.label} />
       <BoxContent display={props.display} />
       {/* <div className="controls"></div> */}
-      {props.controls}
+      {props.action}
     </div>
   );
 }
