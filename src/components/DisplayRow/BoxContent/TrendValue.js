@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import fallIcon from "./fall.png";
-import stableIcon from "./stable.png";
-import riseIcon from "./rise.png";
+import fallIcon from "./fall.svg";
+import stableIcon from "./stable.svg";
+import riseIcon from "./rise.svg";
 
 function getCurrentTrend(measurements) {
   const pressureDifference = measurements[1].value - measurements[0].value;
@@ -40,13 +40,12 @@ function getCurrentIcon(trend) {
 }
 
 export default function TrendValue(props) {
-  
   const trend = getCurrentTrend(props.measurements);
   const icon = getCurrentIcon(trend);
-
+  const className= `${trend}Icon`
   return (
     <Fragment>
-      <img className="arrow" src={icon} alt="arrow"></img>
+      <img className={className} src={icon} alt="arrow"></img>
       <p className="trendText">
         <b>{trend}</b>
       </p>

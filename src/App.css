@@ -48,10 +48,19 @@
   justify-content: space-evenly;
 }
 
+.risingIcon {
+  width: 35%;
+  height: 35%;
+}
 
-img.arrow {
-  width: 12%;
-  height: 12%;
+.fallingIcon {
+  width: 35%;
+  height: 35%;
+}
+
+.stableIcon {
+  width: 25%;
+  height: 25%;
 }
 
 .controls {
