@@ -7,15 +7,15 @@ import Controls from "./components/DisplayRow/Controls";
 
 import "./App.css";
 let tempArr = [];
-let barArr = [0, 0];
-let barTimestampArr = [0, 0];
-const measurements = [ {value: 0, timestamp: 0}, {value: 0, timestamp: 0}]
+const measurements = [
+  { value: 0, timestamp: 0 },
+  { value: 0, timestamp: 0 },
+];
 
 function App() {
   const [temp, setTemp] = useState(0);
   const [bar, setBar] = useState(0);
   const [averageTemp, setAverageTemp] = useState(0);
-  const [trend, setTrend] = useState("stable");
 
   const measureTemp = () => {
     setTemp(getRandomValue(-20, 40));
@@ -23,20 +23,19 @@ function App() {
 
   const measureBar = () => {
     const newValue = getRandomValue(980, 1050);
-    
+
     const newMeasurement = {
       value: null,
-      timestamp: null
-    }
+      timestamp: null,
+    };
 
     setBar(newValue);
-    
+
     newMeasurement.timestamp = Date.now();
     newMeasurement.value = newValue;
 
-    measurements.push(newMeasurement)
-    measurements.shift()
-
+    measurements.push(newMeasurement);
+    measurements.shift();
   };
 
   function calcAverageTemp(temperature) {
@@ -47,31 +46,6 @@ function App() {
     let averageTemp = sum / tempArr.length;
 
     setAverageTemp(averageTemp);
-  }
-
-  function calcBarTrend() {
-
-    const pressureDifference = measurements[1].value - measurements[0].value;
-    const timeDifference = measurements[1].timestamp - measurements[0].timestamp;
-
-    const standardBarDiff = 10;
-    const standardTimeDiff = 10000;
-    const standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
-    // standardGradient now: 0.001
-
-    const gradient = Math.abs(pressureDifference / timeDifference);
-
-    if (pressureDifference >= 4 && gradient >= standardGradient) {
-      setTrend("rising");
-    } else if (pressureDifference >= 4 && gradient < standardGradient) {
-      setTrend("stable");
-    } else if (pressureDifference < 4 && pressureDifference > -4) {
-      setTrend("stable");
-    } else if (pressureDifference <= -4 && gradient < standardGradient) {
-      setTrend("stable");
-    } else if (pressureDifference <= -4 && gradient >= standardGradient) {
-      setTrend("falling");
-    }
   }
 
   function getRandomValue(min, max) {
@@ -91,10 +65,6 @@ function App() {
     calcAverageTemp(temp);
   }, [temp]);
 
-  useEffect(() => {
-    calcBarTrend();
-  }, [bar]);
-
   return (
     <div className="app" align="center">
       <div className="container">
@@ -113,7 +83,10 @@ function App() {
           display={<UnitValue value={bar.toFixed(0).toString()} unit="mbar" />}
           action={<Controls measure={measureBar} />}
         />
-        <DisplayRow label="Barometric Pressure Trend" display={<TrendValue trend={trend} measurements={measurements}/>} />
+        <DisplayRow
+          label="Barometric Pressure Trend"
+          display={<TrendValue measurements={measurements} />}
+        />
       </div>
     </div>
   );
