@@ -17,11 +17,11 @@ function App() {
   const [averageTemp, setAverageTemp] = useState(0);
   const [trend, setTrend] = useState("stable");
 
-  let measureTemp = () => {
+  const measureTemp = () => {
     setTemp(getRandomValue(-20, 40));
   };
 
-  let measureBar = () => {
+  const measureBar = () => {
     setBar(getRandomValue(980, 1050));
     let timestamp = Date.now();
     barTimestampArr.push(timestamp);
@@ -40,20 +40,20 @@ function App() {
 
   function calcBarTrend(barometricPressure) { 
 
-    let latest = barometricPressure;
+    const latest = barometricPressure;
     barArr.push(latest);
     barArr.shift();
 
-    let tempDifference = barArr[1] - barArr[0];
-    let timeDifference = barTimestampArr[1] - barTimestampArr[0];
+    const tempDifference = barArr[1] - barArr[0];
+    const timeDifference = barTimestampArr[1] - barTimestampArr[0];
 
     
     const standardBarDiff = 10;
     const standardTimeDiff = 10000;
-    let standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
+    const standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
     // standardGradient: 0.001
     
-    let gradient = Math.abs(tempDifference / timeDifference);
+    const gradient = Math.abs(tempDifference / timeDifference);
 
     if (tempDifference >= 4 && gradient >= standardGradient) {
       setTrend("rising");
@@ -84,7 +84,7 @@ function App() {
   // useEffect -> arrays, später gemeinsames Objekt in Array
 
 
-
+  
   useEffect(() => {
     calcAverageTemp(temp);
   }, [temp]);
