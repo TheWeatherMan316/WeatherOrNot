@@ -3,11 +3,7 @@ import fallIcon from "./fall.png";
 import stableIcon from "./stable.png";
 import riseIcon from "./rise.png";
 
-export default function TrendValue(props) {
-  let trend = "stable";
-
-  const measurements = props.measurements;
-
+function getCurrentTrend(measurements) {
   const pressureDifference = measurements[1].value - measurements[0].value;
   const timeDifference = measurements[1].timestamp - measurements[0].timestamp;
 
@@ -19,28 +15,34 @@ export default function TrendValue(props) {
   const gradient = Math.abs(pressureDifference / timeDifference);
 
   if (pressureDifference >= 4 && gradient >= standardGradient) {
-    trend = "rising";
+    return "rising";
   } else if (pressureDifference >= 4 && gradient < standardGradient) {
-    trend = "stable";
+    return "stable";
   } else if (pressureDifference < 4 && pressureDifference > -4) {
-    trend = "stable";
+    return "stable";
   } else if (pressureDifference <= -4 && gradient < standardGradient) {
-    trend = "stable";
+    return "stable";
   } else if (pressureDifference <= -4 && gradient >= standardGradient) {
-    trend = "falling";
+    return "falling";
   }
+}
 
-  let icon;
-
+function getCurrentIcon(trend) {
   if (trend === "rising") {
-    icon = riseIcon;
+    return riseIcon;
   }
   if (trend === "stable") {
-    icon = stableIcon;
+    return stableIcon;
   }
   if (trend === "falling") {
-    icon = fallIcon;
+    return fallIcon;
   }
+}
+
+export default function TrendValue(props) {
+  
+  const trend = getCurrentTrend(props.measurements);
+  const icon = getCurrentIcon(trend);
 
   return (
     <Fragment>
