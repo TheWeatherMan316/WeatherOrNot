@@ -59,7 +59,8 @@ function App() {
     setInterval(() => {
       measureBar();
     }, 5000);
-  }, []);
+    // eslint-disable-next-line
+  }, []); 
 
   useEffect(() => {
     calcAverageTemp(temp);
