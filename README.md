@@ -1,10 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<<<<<<< HEAD
+
 ![](https://travis-ci.org/TheWeatherMan316/WeatherOrNot.svg?branch=master)
-=======
-https://travis-ci.org/TheWeatherMan316/WeatherOrNot.svg?branch=master
->>>>>>> c347d5e6b1f125dd8f48d0b820ee7e1b9af74458
+
 
 ## Available Scripts
 
