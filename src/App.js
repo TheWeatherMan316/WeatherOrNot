@@ -4,8 +4,7 @@ import DisplayRow from "./components/DisplayRow";
 import TrendValue from "./components/DisplayRow/BoxContent/TrendValue";
 import UnitValue from "./components/DisplayRow/BoxContent/UnitValue";
 import Controls from "./components/DisplayRow/Controls";
-import Clock from "./components/DisplayRow/BoxContent/Clock";
-import Calendar from "./components/DisplayRow/BoxContent/Calendar";
+import CurrentDate from "./components/DisplayRow/BoxContent/CurrentDate";
 import "./App.css";
 
 let tempArr = [];
@@ -72,10 +71,10 @@ function App() {
     <div className="app" align="center">
       <div className="container">
         <Header />
-        <DisplayRow label="Time" display={<Clock/>} />
+        <DisplayRow label="Time" display={ <CurrentDate time={true}/>} />
         <DisplayRow
           label="Date"
-          display={<Calendar />}
+          display={<CurrentDate time={false}/>}
         />
         <DisplayRow
           label="Temperature"
