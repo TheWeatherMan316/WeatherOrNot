@@ -5,7 +5,7 @@ import TrendValue from "./components/DisplayRow/BoxContent/TrendValue";
 import UnitValue from "./components/DisplayRow/BoxContent/UnitValue";
 import Controls from "./components/DisplayRow/Controls";
 import Clock from "./components/DisplayRow/BoxContent/Clock";
-import Calendar from "./components/DisplayRow/BoxContent/Calendar";
+import Calendar from "./components/DisplayRow/BoxContent/CurrentDate";
 import "./App.css";
 
 let tempArr = [];

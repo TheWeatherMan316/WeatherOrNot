@@ -16,8 +16,9 @@ function getCurrentDate() {
   return (today = `${dd}.${mm}.${yy}`);
 }
 
-export default function UnitValue() {
+export default function CurrentDate() {
   const today = getCurrentDate();
+  console.log("I´m updated")
 
   return (
     <p>
