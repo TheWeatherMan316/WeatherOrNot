@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-export default function CurrentDate() {
+export default function CurrentDate(props) {
+
+  const [date, setDate] = useState(new Date());
+  
   useEffect(() => {
     setInterval(() => {
-      let today = new Date().toLocaleDateString("de-DE");
+      let today = new Date();
       setDate(today);
-    }, 60000);
+    }, 1000);
   }, []);
-
-  const [date, setDate] = useState(new Date().toLocaleDateString("de-DE"));
 
   return (
     <p>
-      <b>{date}</b>
+      <b>{props.time === true ? date.toLocaleTimeString("de-DE"): date.toLocaleDateString("de-DE")}</b>
     </p>
   );
 }
