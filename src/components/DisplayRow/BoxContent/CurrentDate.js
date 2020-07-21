@@ -1,28 +1,18 @@
-import React from "react";
-
-function getCurrentDate() {
-  let today = new Date();
-  let dd = today.getDate();
-
-  let mm = today.getMonth() + 1;
-  const yy = today.getFullYear().toString().substring(2, 4);
-  if (dd < 10) {
-    dd = `0${dd}`;
-  }
-
-  if (mm < 10) {
-    mm = `0${mm}`;
-  }
-  return (today = `${dd}.${mm}.${yy}`);
-}
+import React, { useState, useEffect } from "react";
 
 export default function CurrentDate() {
-  const today = getCurrentDate();
-  console.log("I´m updated")
+  useEffect(() => {
+    setInterval(() => {
+      let today = new Date().toLocaleDateString("de-DE");
+      setDate(today);
+    }, 60000);
+  }, []);
+
+  const [date, setDate] = useState(new Date().toLocaleDateString("de-DE"));
 
   return (
     <p>
-      <b>{today}</b>
+      <b>{date}</b>
     </p>
   );
 }

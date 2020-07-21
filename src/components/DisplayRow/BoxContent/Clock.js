@@ -5,11 +5,7 @@ export default function Clock() {
 
   useEffect(() => {
     setInterval(() => {
-      const today = new Date();
-      const hours = today.getHours()<10 ? "0"+today.getHours() : today.getHours()
-      const minutes = today.getMinutes()<10 ? "0"+today.getMinutes() : today.getMinutes()
-      const seconds = today.getSeconds()<10 ? "0"+today.getSeconds() : today.getSeconds()
-      const time = hours + ":" + minutes + ":" + seconds;
+      const time = new Date().toLocaleTimeString("de-DE");
       setTime(time);
     }, 1000);
   }, []);
