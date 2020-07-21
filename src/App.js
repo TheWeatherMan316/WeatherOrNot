@@ -4,8 +4,10 @@ import DisplayRow from "./components/DisplayRow";
 import TrendValue from "./components/DisplayRow/BoxContent/TrendValue";
 import UnitValue from "./components/DisplayRow/BoxContent/UnitValue";
 import Controls from "./components/DisplayRow/Controls";
-
+import Clock from "./components/DisplayRow/BoxContent/Clock";
+import Calendar from "./components/DisplayRow/BoxContent/Calendar";
 import "./App.css";
+
 let tempArr = [];
 const measurements = [
   { value: 0, timestamp: 0 },
@@ -55,12 +57,12 @@ function App() {
   useEffect(() => {
     setInterval(() => {
       measureTemp();
-    }, 1000);
+    }, 2000);
     setInterval(() => {
       measureBar();
     }, 5000);
     // eslint-disable-next-line
-  }, []); 
+  }, []);
 
   useEffect(() => {
     calcAverageTemp(temp);
@@ -70,6 +72,11 @@ function App() {
     <div className="app" align="center">
       <div className="container">
         <Header />
+        <DisplayRow label="Time" display={<Clock/>} />
+        <DisplayRow
+          label="Date"
+          display={<Calendar />}
+        />
         <DisplayRow
           label="Temperature"
           display={<UnitValue value={temp.toFixed(1).toString()} unit="°C" />}
