@@ -3,9 +3,10 @@ import fallIcon from "./fall.svg";
 import stableIcon from "./stable.svg";
 import riseIcon from "./rise.svg";
 
-function getCurrentTrend(measurements) {
-  const pressureDifference = measurements[1].value - measurements[0].value;
-  const timeDifference = measurements[1].timestamp - measurements[0].timestamp;
+function getCurrentTrend(barHistory) {
+  const pressureDifference = barHistory[barHistory.length - 1].value - barHistory[barHistory.length - 2].value;
+  const timeDifference = barHistory[barHistory.length - 1].time - barHistory[barHistory.length - 2].time;
+
 
   const standardBarDiff = 10;
   const standardTimeDiff = 10000;

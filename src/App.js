@@ -7,33 +7,39 @@ import Controls from "./components/DisplayRow/Controls";
 import CurrentDate from "./components/DisplayRow/BoxContent/CurrentDate";
 import "./App.css";
 
-const tempArr = [];
-
 const tempHistoryArr = [];
 
-const barHistArr = [];
-
-const measurements = [
-  { value: 0, timestamp: 0 },
-  { value: 0, timestamp: 0 },
-];
+const barHistArr = [{
+  value: 0,
+  time: new Date(),
+}, {
+  value: 0,
+  time: new Date(),
+}];
 
 function App() {
   const [temp, setTemp] = useState(0);
-  const [bar, setBar] = useState(0);
   const [averageTemp, setAverageTemp] = useState(0);
+  const [bar, setBar] = useState(0);
+
+  function getRandomValue(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
   const measureTemp = () => {
     const newTemp = getRandomValue(-20, 40);
     const tempTime = new Date();
     setTemp(newTemp);
-    tempArr.push(newTemp);
+    storeTemp(newTemp, tempTime);
+  };
+
+  function storeTemp(newTemp, tempTime) {
     const tempHistElement = {
       value: newTemp,
       time: tempTime,
     };
     tempHistoryArr.push(tempHistElement);
-  };
+  }
 
   const tempHistory = tempHistoryArr.map((element) => (
     <li>
@@ -41,61 +47,6 @@ function App() {
       {element.value.toFixed(1).toString()}°C
     </li>
   ));
-
-  const measureBar = () => {
-    const newValue = getRandomValue(980, 1050);
-
-    const newMeasurement = {
-      value: null,
-      timestamp: null,
-    };
-
-    setBar(newValue);
-    const time = new Date();
-    newMeasurement.timestamp = time;
-    newMeasurement.value = newValue;
-
-    measurements.push(newMeasurement);
-    measurements.shift();
-
-    const barHistElement = {
-      value: newValue,
-      time: time,
-    };
-
-    barHistArr.push(barHistElement);
-  };
-
-  const barHistory = barHistArr.map((element) => (
-    <li>
-      {element.time.toLocaleDateString("de-DE")} | {element.time.toLocaleTimeString("de-DE")} |
-      {element.value.toFixed(0).toString()} mBar
-    </li>
-  ));
-
-  function calcAverageTemp() {
-    let sum = tempArr.reduce((a, b) => a + b, 0);
-    let averageTemp = sum / tempArr.length;
-    setAverageTemp(averageTemp);
-  }
-
-  function getRandomValue(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  useEffect(() => {
-    setInterval(() => {
-      measureTemp();
-    }, 2000);
-    setInterval(() => {
-      measureBar();
-    }, 5000);
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    calcAverageTemp();
-  }, [temp]);
 
   const tempHistComponent = () => {
     return (
@@ -107,6 +58,50 @@ function App() {
     );
   };
 
+  function calcAverageTemp() {
+    let sum = 0;
+    for (let i = 0; i < tempHistoryArr.length; i++) {
+      sum += tempHistoryArr[i].value;
+    }
+    let averageTemp = sum / tempHistoryArr.length;
+    setAverageTemp(averageTemp);
+  }
+
+  useEffect(() => {
+    setInterval(() => {
+      measureTemp();
+    }, 2000);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    calcAverageTemp();
+  }, [temp]);
+
+  const measureBar = () => {
+    const newBar = getRandomValue(980, 1050);
+    setBar(newBar);
+    const barTime = new Date();
+    storeBar(newBar, barTime);
+  };
+
+  function storeBar(newBar, barTime) {
+
+    const barHistElement = {
+      value: newBar,
+      time: barTime,
+    };
+
+    barHistArr.push(barHistElement);
+  }
+
+  const barHistory = barHistArr.map((element) => (
+    <li>
+      {element.time.toLocaleDateString("de-DE")} | {element.time.toLocaleTimeString("de-DE")} |
+      {element.value.toFixed(0).toString()} mBar
+    </li>
+  ));
+
   const barHistComponent = () => {
     return (
       <div className="container" id="barHist">
@@ -116,6 +111,13 @@ function App() {
       </div>
     );
   };
+
+  useEffect(() => {
+    setInterval(() => {
+      measureBar();
+    }, 5000);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="app" align="center">
@@ -139,7 +141,7 @@ function App() {
         />
         <DisplayRow
           label="Barometric Pressure Trend"
-          display={<TrendValue measurements={measurements} />}
+          display={<TrendValue measurements={barHistArr} />}
         />
       </div>
       {tempHistComponent()}
