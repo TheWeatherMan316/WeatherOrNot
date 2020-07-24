@@ -45,7 +45,7 @@ export default function TrendValue(props) {
   const className= `${trend}Icon`
   return (
     <Fragment>
-      <img className={className} src={icon} alt="arrow"></img>
+      <img className={className} src={icon} alt="arrow"/>
       <p className="trendText">
         <b>{trend}</b>
       </p>
