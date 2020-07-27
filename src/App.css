@@ -1,4 +1,5 @@
 .container {
+  color: gainsboro;
   margin-top: 15px;
   max-width: 600px;
   background-color: #637d96;
@@ -37,6 +38,7 @@
 }
 
 .BoxContent {
+  color: black;
   width: 25%;
   background-color: gainsboro;
   border: 1px solid #2b3a44;
