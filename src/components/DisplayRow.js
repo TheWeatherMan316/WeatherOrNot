@@ -8,6 +8,7 @@ export default function DisplayRow(props) {
       <Label label={props.label} />
       <BoxContent display={props.display} />
       {props.action}
+      {props.history}
     </div>
   );
 }

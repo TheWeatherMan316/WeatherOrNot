@@ -128,7 +128,8 @@ function App() {
         <DisplayRow
           label="Temperature"
           display={<UnitValue value={temp.toFixed(1).toString()} unit="°C" />}
-          action={<Controls measure={measureTemp} />}
+          action={<Controls measure={measureTemp} buttonLabel="measure" />}
+          history={<Controls measure={measureBar} buttonLabel="history" />}
         />
         <DisplayRow
           label="Average Temperature"
@@ -137,7 +138,8 @@ function App() {
         <DisplayRow
           label="Barometric Pressure"
           display={<UnitValue value={bar.toFixed(0).toString()} unit="mbar" />}
-          action={<Controls measure={measureBar} />}
+          action={<Controls measure={measureBar} buttonLabel="measure" />} 
+          history={<Controls measure={measureBar} buttonLabel="history" />}
         />
         <DisplayRow
           label="Barometric Pressure Trend"

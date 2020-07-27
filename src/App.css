@@ -1,6 +1,6 @@
 .container {
   margin-top: 15px;
-  max-width: 500px;
+  max-width: 600px;
   background-color: #637d96;
   border: 1px solid #2b3a44;
   border-radius: 17px;
@@ -24,7 +24,7 @@
 }
 
 .label {
-  width: 50%;
+  width: 43%;
   color: gainsboro;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .BoxContent {
-  width: 30%;
+  width: 25%;
   background-color: gainsboro;
   border: 1px solid #2b3a44;
   border-radius: 12px;
@@ -64,5 +64,24 @@
 }
 
 .controls {
-  width: 20%;
+  width: 16%;
 }
+
+.button {
+  width: 80px;
+  height: 25px;
+  background-color: gainsboro;
+  border: 1px solid #2b3a44;
+  border-radius: 12px;
+  box-shadow: 1px 1px 1px #606060;
+}
+
+.button:hover {
+  background-color: #c3c3c3;
+  transition-duration: 0.4s;
+}
+
+.button:active {
+  background-color: #637d96;
+}
+
