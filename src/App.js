@@ -58,9 +58,9 @@ function App() {
   const tempHistComponent = () => {
     return (
       <div className="history">
-        <button className="button">
-          <Link to="/home">Back</Link>
-        </button>
+        <Link to="/home"><button className="button">
+          Back
+        </button></Link>
         <table>
           <tr>
             <th>Date</th>
@@ -122,9 +122,9 @@ function App() {
   const barHistComponent = () => {
     return (
       <div className="history">
-        <button className="button">
-          <Link to="/home">Back</Link>
-        </button>
+        <Link to="/home"><button className="button">
+          Back
+        </button></Link>
         <table>
           <tr>
             <th>Date</th>
@@ -155,9 +155,9 @@ function App() {
           display={<UnitValue value={temp.toFixed(1).toString()} unit="°C" />}
           action={<Controls action={measureTemp} buttonLabel="measure" />}
           history={
-            <button className="button">
-              <Link to="/tempHist">History</Link>
-            </button>
+            <Link to="/tempHist"><button className="button">
+              History
+            </button></Link>
           }
         />
         <DisplayRow
@@ -169,9 +169,9 @@ function App() {
           display={<UnitValue value={bar.toFixed(0).toString()} unit="mbar" />}
           action={<Controls action={measureBar} buttonLabel="measure" />}
           history={
-            <button className="button">
-              <Link to="/barHist">History</Link>
-            </button>
+            <Link to="/barHist"><button className="button">
+              History
+            </button></Link>
           }
         />
         <DisplayRow
@@ -193,6 +193,7 @@ function App() {
           </Switch>
         </Router>
       </div>
+       <p className="testingPlaceholder">test</p>
     </div>
   );
 }
