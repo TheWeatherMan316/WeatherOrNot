@@ -47,7 +47,7 @@ function App() {
 
   const tempHistory = tempHistoryArr.map((element) => (
         <Fragment>
-        <tr>
+        <tr key={element.time}>
           <td>{element.time.toLocaleDateString("de-DE")}</td>
           <td>{element.time.toLocaleTimeString("de-DE")}</td>
           <td>{element.value.toFixed(1).toString()}°C</td>
@@ -111,7 +111,7 @@ function App() {
 
   const barHistory = barHistArr.map((element) => (
     <Fragment>
-      <tr>
+      <tr key={element.time}>
         <td>{element.time.toLocaleDateString("de-DE")}</td>
         <td>{element.time.toLocaleTimeString("de-DE")}</td>
         <td>{element.value.toFixed(0).toString()} mBar</td>
