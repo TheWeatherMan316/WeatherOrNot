@@ -1,6 +1,7 @@
 .container {
   color: gainsboro;
   margin-top: 15px;
+  margin-bottom: 15px;
   max-width: 600px;
   background-color: #637d96;
   border: 1px solid #2b3a44;
@@ -87,3 +88,44 @@
   background-color: #637d96;
 }
 
+a:link {
+  color: black;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+a:active {
+  color: black;
+  text-decoration: none;
+}
+
+.history {
+  margin-top: 25px;
+}
+
+table {
+  font-size: 11px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td, th {
+  border: 1px solid #455768;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #597087;
+}
