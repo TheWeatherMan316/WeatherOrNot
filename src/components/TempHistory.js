@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header"
 
@@ -20,13 +20,13 @@ export default function TempHistory(props) {
     });
 
     const tempHistory = reversedArray.map((element) => (
-        <Fragment>
+        <>
           <tr key={element.time}>
             <td>{element.time.toLocaleDateString("de-DE")}</td>
             <td>{element.time.toLocaleTimeString("de-DE")}</td>
             <td>{element.value.toFixed(1).toString()}°C</td>
           </tr>
-        </Fragment>
+        </>
       ));
     
 

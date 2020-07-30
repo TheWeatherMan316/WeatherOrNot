@@ -7,7 +7,25 @@ import CurrentDate from "./DisplayRow/BoxContent/CurrentDate";
 import TrendValue from "./DisplayRow/BoxContent/TrendValue";
 import { Link } from "react-router-dom";
 
+
 export default function Home(props) {
+
+  function checkIfBarIsZero(bar) {
+  if (bar === 0) {
+    return "NaN"
+  } else {
+    return bar.toFixed(0).toString()
+}
+}
+
+function checkIfTempIsZero(temp) {
+  if (temp === 0) {
+    return "NaN"
+  } else {
+    return temp.toFixed(1).toString()
+}
+}
+
   return (
     <div>
       <>
@@ -16,7 +34,7 @@ export default function Home(props) {
         <DisplayRow label="Date" display={<CurrentDate time={false} />} />
         <DisplayRow
           label="Temperature"
-          display={<UnitValue value={props.temp.toFixed(1).toString()} unit="°C" />}
+          display={<UnitValue value={checkIfTempIsZero(props.temp)} unit="°C" />}
           action={<Controls action={props.measureTemp} buttonLabel="measure" />}
           history={
             <Link to="/tempHist">
@@ -30,7 +48,7 @@ export default function Home(props) {
         />
         <DisplayRow
           label="Barometric Pressure"
-          display={<UnitValue value={props.bar.toFixed(0).toString()} unit="mbar" />}
+          display={<UnitValue value={checkIfBarIsZero(props.bar)} unit="mbar" />}
           action={<Controls action={props.measureBar} buttonLabel="measure" />}
           history={
             <Link to="/barHist">
