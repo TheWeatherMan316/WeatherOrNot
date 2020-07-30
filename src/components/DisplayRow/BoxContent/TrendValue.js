@@ -2,11 +2,12 @@ import React, { Fragment } from "react";
 import fallIcon from "./fall.svg";
 import stableIcon from "./stable.svg";
 import riseIcon from "./rise.svg";
+import hourGlass from "./hourglass.svg"
 
 function getCurrentTrend(barHistory) {
-  const pressureDifference = barHistory[barHistory.length - 1].value - barHistory[barHistory.length - 2].value;
+try {
+      const pressureDifference = barHistory[barHistory.length - 1].value - barHistory[barHistory.length - 2].value;
   const timeDifference = barHistory[barHistory.length - 1].time - barHistory[barHistory.length - 2].time;
-
 
   const standardBarDiff = 10;
   const standardTimeDiff = 10000;
@@ -26,6 +27,10 @@ function getCurrentTrend(barHistory) {
   } else if (pressureDifference <= -4 && gradient >= standardGradient) {
     return "falling";
   }
+} catch {
+  return "--"
+}
+
 }
 
 function getCurrentIcon(trend) {
@@ -37,6 +42,8 @@ function getCurrentIcon(trend) {
   }
   if (trend === "falling") {
     return fallIcon;
+  } else {
+    return hourGlass
   }
 }
 
@@ -46,7 +53,7 @@ export default function TrendValue(props) {
   const className= `${trend}Icon`
   return (
     <Fragment>
-      <img className={className} src={icon} alt="arrow"/>
+      <img className={className} src={icon} alt=""/>
       <p className="trendText">
         <b>{trend}</b>
       </p>

@@ -1,29 +1,16 @@
-import React, { useState, useEffect, Fragment } from "react";
-import Header from "./components/Header";
-import DisplayRow from "./components/DisplayRow";
-import TrendValue from "./components/DisplayRow/BoxContent/TrendValue";
-import UnitValue from "./components/DisplayRow/BoxContent/UnitValue";
-import Controls from "./components/DisplayRow/Controls";
-import CurrentDate from "./components/DisplayRow/BoxContent/CurrentDate";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import BarHistory from "./components/BarHistory"
+import TempHistory from "./components/TempHistory"
+import Home from "./components/Home"
 
 const tempHistoryArr = [];
 
-const barHistArr = [
-  {
-    value: 0,
-    time: new Date(),
-  },
-  {
-    value: 0,
-    time: new Date(),
-  },
-];
+const barHistArr = [];
 
 function App() {
   const [temp, setTemp] = useState(0);
-  const [averageTemp, setAverageTemp] = useState(0);
   const [bar, setBar] = useState(0);
 
   function getRandomValue(min, max) {
@@ -45,41 +32,13 @@ function App() {
     tempHistoryArr.push(tempHistElement);
   }
 
-  const tempHistory = tempHistoryArr.map((element) => (
-        <Fragment>
-        <tr key={element.time}>
-          <td>{element.time.toLocaleDateString("de-DE")}</td>
-          <td>{element.time.toLocaleTimeString("de-DE")}</td>
-          <td>{element.value.toFixed(1).toString()}°C</td>
-        </tr>
-      </Fragment>
-  ));
-
-  const tempHistComponent = () => {
-    return (
-      <div className="history">
-        <Link to="/home"><button className="button">
-          Back
-        </button></Link>
-        <table>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Measurement</th>
-          </tr>
-          {tempHistory}
-        </table>
-      </div>
-    );
-  };
-
   function calcAverageTemp() {
     let sum = 0;
     for (let i = 0; i < tempHistoryArr.length; i++) {
       sum += tempHistoryArr[i].value;
     }
     let averageTemp = sum / tempHistoryArr.length;
-    setAverageTemp(averageTemp);
+    return averageTemp;
   }
 
   useEffect(() => {
@@ -109,34 +68,6 @@ function App() {
     barHistArr.push(barHistElement);
   }
 
-  const barHistory = barHistArr.map((element) => (
-    <Fragment>
-      <tr key={element.time}>
-        <td>{element.time.toLocaleDateString("de-DE")}</td>
-        <td>{element.time.toLocaleTimeString("de-DE")}</td>
-        <td>{element.value.toFixed(0).toString()} mBar</td>
-      </tr>
-    </Fragment>
-  ));
-
-  const barHistComponent = () => {
-    return (
-      <div className="history">
-        <Link to="/home"><button className="button">
-          Back
-        </button></Link>
-        <table>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Measurement</th>
-          </tr>
-          {barHistory}
-        </table>
-      </div>
-    );
-  };
-
   useEffect(() => {
     setInterval(() => {
       measureBar();
@@ -144,58 +75,20 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-  const home = () => {
-    return (
-      <Fragment>
-        <Header />
-        <DisplayRow label="Time" display={<CurrentDate time={true} />} />
-        <DisplayRow label="Date" display={<CurrentDate time={false} />} />
-        <DisplayRow
-          label="Temperature"
-          display={<UnitValue value={temp.toFixed(1).toString()} unit="°C" />}
-          action={<Controls action={measureTemp} buttonLabel="measure" />}
-          history={
-            <Link to="/tempHist"><button className="button">
-              History
-            </button></Link>
-          }
-        />
-        <DisplayRow
-          label="Average Temperature"
-          display={<UnitValue value={averageTemp.toFixed(1).toString()} unit="°C Ø" />}
-        />
-        <DisplayRow
-          label="Barometric Pressure"
-          display={<UnitValue value={bar.toFixed(0).toString()} unit="mbar" />}
-          action={<Controls action={measureBar} buttonLabel="measure" />}
-          history={
-            <Link to="/barHist"><button className="button">
-              History
-            </button></Link>
-          }
-        />
-        <DisplayRow
-          label="Barometric Pressure Trend"
-          display={<TrendValue measurements={barHistArr} />}
-        />
-      </Fragment>
-    );
-  };
-
   return (
     <div className="app" align="center">
       <div className="container">
         <Router>
           <Switch>
-            <Route path="/tempHist">{tempHistComponent()}</Route>
-            <Route path="/barHist">{barHistComponent()}</Route>
-            <Route path="/home">{home()}</Route>
+            <Route path="/tempHist"><TempHistory tempHistoryArr={tempHistoryArr} /></Route>
+            <Route path="/barHist"><BarHistory barHistArr={barHistArr} /></Route>
+            <Route path="/home">< Home temp={temp} measureTemp={measureTemp} calcAverageTemp={calcAverageTemp} bar={bar} measureBar={measureBar} barHistArr={barHistArr}/></Route>
           </Switch>
         </Router>
       </div>
-       <p className="testingPlaceholder">test</p>
     </div>
   );
 }
 
 export default App;
+

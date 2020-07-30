@@ -20,9 +20,10 @@
 .header {
   width: 100%;
   color: #d2aa6d;
-  text-shadow: 0 0 1px #59191f;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .label {
@@ -31,11 +32,14 @@
 }
 
 .name {
-  width: 93%;
+  align-self: center;
+  text-shadow: 2px 2px 2px black;
 }
 
 .logo {
-  width: 7%;
+  margin-left: 4px;
+  width: 8%;
+  align-self: center;
 }
 
 .BoxContent {
@@ -66,6 +70,11 @@
   height: 25%;
 }
 
+.--Icon {
+  width: 18%;
+  height: 18%;
+}
+
 .controls {
   width: 16%;
 }
@@ -75,8 +84,22 @@
   height: 25px;
   background-color: gainsboro;
   border: 1px solid #2b3a44;
-  border-radius: 12px;
-  box-shadow: 1px 1px 1px #606060;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px black;
+  cursor: pointer;
+}
+
+.buttonTableSort {
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #455768;
+  border: none;
+  color: gainsboro;
+  padding: 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -120,16 +143,15 @@ table {
   width: 80%;
 }
 
-td, th {
+td,
+th {
   border: 1px solid #455768;
   text-align: left;
   padding: 8px;
+  width: 33%
 }
+
 
 tr:nth-child(even) {
   background-color: #597087;
-}
-
-.testingPlaceholder {
-  color: white;
 }
