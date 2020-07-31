@@ -5,13 +5,11 @@ import BarometricHistory from "./components/BarometricHistory";
 import TemperatureHistory from "./components/TemperatureHistory";
 import Home from "./components/Home";
 
-const temperatureMeasurements = [{value: 1, time: new Date}];
-// Todo: error handling instead of initial value...
-
 const barometricMeasurements = [];
 
 function App() {
   const [bar, setBar] = useState(0);
+  const [temperatureMeasurements, setTemperatureMeasurements] = useState([{value: 0, time: Date.now()}])
 
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
@@ -23,22 +21,14 @@ function App() {
     storeTemperatureAndCalcAverage(newTemperature, temperatureTime);
   };
 
-  function storeTemperatureAndCalcAverage(newTemperature, temperatureTime) {
-    const singleMeasurement = {
+  function storeTemperatureAndCalcAverage(newTemperature, measurementTime) {
+    const latestMeasurement = {
       value: newTemperature,
-      time: temperatureTime,
+      time: measurementTime,
     };
-    temperatureMeasurements.push(singleMeasurement);
-    calcAverageTemperature();
-  }
 
-  function calcAverageTemperature() {
-    let sum = 0;
-    for (let i = 0; i < temperatureMeasurements.length; i++) {
-      sum += temperatureMeasurements[i].value;
-    }
-    let averageTemperature = sum / temperatureMeasurements.length;
-    return averageTemperature;
+    const newArray = [...temperatureMeasurements, latestMeasurement]
+    setTemperatureMeasurements(newArray)
   }
 
   useEffect(() => {
@@ -48,17 +38,17 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-  const measureBar = () => {
-    const newBar = getRandomValue(980, 1050);
-    setBar(newBar);
-    const barTime = new Date();
-    storeBar(newBar, barTime);
+  const measureBarometricPressure = () => {
+    const newPressure = getRandomValue(980, 1050);
+    setBar(newPressure);
+    const measurementTime = new Date();
+    storeBarometricPressure(newPressure, measurementTime);
   };
 
-  function storeBar(newBar, barTime) {
+  function storeBarometricPressure(newPressure, measurementTime) {
     const singleMeasurement = {
-      value: newBar,
-      time: barTime,
+      value: newPressure,
+      time: measurementTime,
     };
 
     barometricMeasurements.push(singleMeasurement);
@@ -66,7 +56,7 @@ function App() {
 
   useEffect(() => {
     setInterval(() => {
-      measureBar();
+      measureBarometricPressure();
     }, 5000);
     // eslint-disable-next-line
   }, []);
@@ -86,9 +76,8 @@ function App() {
               <Home
                 temperatureMeasurements={temperatureMeasurements}
                 measureTemperature={measureTemperature}
-                calcAverageTemperature={calcAverageTemperature}
                 bar={bar}
-                measureBar={measureBar}
+                measureBarometricPressure={measureBarometricPressure}
                 barometricMeasurements={barometricMeasurements}
               />
             </Route>

@@ -7,27 +7,39 @@ import CurrentDate from "./DisplayRow/BoxContent/CurrentDate";
 import TrendValue from "./DisplayRow/BoxContent/TrendValue";
 import { Link } from "react-router-dom";
 
-
 export default function Home(props) {
+  const temperature = () => {
+    if (props.temperatureMeasurements === undefined) {
+      return 0;
+    } else {
+      return props.temperatureMeasurements[props.temperatureMeasurements.length - 1].value;
+    }
+  };
 
   function checkIfBarIsZero(bar) {
-  if (bar === 0) {
-    return "NaN"
-  } else {
-    return bar.toFixed(0).toString()
-}
-}
+    if (bar === 0) {
+      return "NaN";
+    } else {
+      return bar.toFixed(0).toString();
+    }
+  }
 
-function checkIfTempIsZero(temp) {
-  if (temp === 0) {
-    return "NaN"
-  } else {
-    return temp.toFixed(1).toString()
-}
-}
-console.log(props.temperatureMeasurements)
-  const temperatureMeasurements = props.temperatureMeasurements
-  const temperature = temperatureMeasurements[temperatureMeasurements.length - 1].value
+  function checkIfTempIsZero(temperature) {
+    if (temperature === 0) {
+      return "NaN";
+    } else {
+      return temperature.toFixed(1).toString();
+    }
+  }
+
+  function calcAverageTemperature(temperatureMeasurements) {
+    let sum = 0;
+    for (let i = 0; i < temperatureMeasurements.length; i++) {
+      sum += temperatureMeasurements[i].value;
+    }
+    let averageTemperature = sum / temperatureMeasurements.length;
+    return averageTemperature;
+  }
 
   return (
     <div>
@@ -37,7 +49,7 @@ console.log(props.temperatureMeasurements)
         <DisplayRow label="Date" display={<CurrentDate time={false} />} />
         <DisplayRow
           label="Temperature"
-          display={<UnitValue value={checkIfTempIsZero(temperature)} unit="°C" />}
+          display={<UnitValue value={checkIfTempIsZero(temperature())} unit="°C" />}
           action={<Controls action={props.measureTemperature} buttonLabel="measure" />}
           history={
             <Link to="/temperature_history">
@@ -47,7 +59,7 @@ console.log(props.temperatureMeasurements)
         />
         <DisplayRow
           label="Average Temperature"
-          display={<UnitValue value={props.calcAverageTemperature().toFixed(1)} unit="°C Ø" />}
+          display={<UnitValue value={calcAverageTemperature(props.temperatureMeasurements).toFixed(1)} unit="°C Ø" />}
         />
         <DisplayRow
           label="Barometric Pressure"
