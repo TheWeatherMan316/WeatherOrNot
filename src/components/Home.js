@@ -25,6 +25,9 @@ function checkIfTempIsZero(temp) {
     return temp.toFixed(1).toString()
 }
 }
+console.log(props.temperatureMeasurements)
+  const temperatureMeasurements = props.temperatureMeasurements
+  const temperature = temperatureMeasurements[temperatureMeasurements.length - 1].value
 
   return (
     <div>
@@ -34,31 +37,31 @@ function checkIfTempIsZero(temp) {
         <DisplayRow label="Date" display={<CurrentDate time={false} />} />
         <DisplayRow
           label="Temperature"
-          display={<UnitValue value={checkIfTempIsZero(props.temp)} unit="°C" />}
-          action={<Controls action={props.measureTemp} buttonLabel="measure" />}
+          display={<UnitValue value={checkIfTempIsZero(temperature)} unit="°C" />}
+          action={<Controls action={props.measureTemperature} buttonLabel="measure" />}
           history={
-            <Link to="/tempHist">
+            <Link to="/temperature_history">
               <button className="button">History</button>
             </Link>
           }
         />
         <DisplayRow
           label="Average Temperature"
-          display={<UnitValue value={props.calcAverageTemp().toFixed(1)} unit="°C Ø" />}
+          display={<UnitValue value={props.calcAverageTemperature().toFixed(1)} unit="°C Ø" />}
         />
         <DisplayRow
           label="Barometric Pressure"
           display={<UnitValue value={checkIfBarIsZero(props.bar)} unit="mbar" />}
           action={<Controls action={props.measureBar} buttonLabel="measure" />}
           history={
-            <Link to="/barHist">
+            <Link to="/barometric_history">
               <button className="button">History</button>
             </Link>
           }
         />
         <DisplayRow
           label="Barometric Pressure Trend"
-          display={<TrendValue measurements={props.barHistArr} />}
+          display={<TrendValue measurements={props.barometricMeasurements} />}
         />
       </>
     </div>

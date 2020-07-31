@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 
-export default function BarHistory(props) {
+export default function BarometricHistory(props) {
   const [sortedField, setSortedField] = useState(null);
 
-  const [...values] = props.barHistArr;
+  const [...values] = props.barometricMeasurements;
   let sortedArray = [...values];
   let reversedArray = sortedArray.reverse();
 
@@ -18,7 +18,7 @@ export default function BarHistory(props) {
     }
     return 0;
   });
-  const barHistory = reversedArray.map((element) => (
+  const barometricHistory = reversedArray.map((element) => (
     <>
       <tr key={element.time}>
         <td>{element.time.toLocaleDateString("de-DE")}</td>
@@ -35,6 +35,7 @@ export default function BarHistory(props) {
         <Link to="/home">
           <button className="button">Back</button>
         </Link>
+        <h3 className="headings">Barometric Pressure History</h3>
         <table>
           <tr>
             <th>Date</th>
@@ -59,7 +60,7 @@ export default function BarHistory(props) {
               </button>
             </th>
           </tr>
-          {barHistory}
+          {barometricHistory}
         </table>
       </div>
     </>

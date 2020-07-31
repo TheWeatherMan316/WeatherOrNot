@@ -27,6 +27,8 @@
 }
 
 .label {
+  text-align: right;
+  padding-right: 10px;
   width: 43%;
   color: gainsboro;
 }
@@ -34,6 +36,12 @@
 .name {
   align-self: center;
   text-shadow: 2px 2px 2px black;
+}
+
+.headings {
+  align-self: center;
+  text-shadow: 2px 2px 2px black;
+  color: gainsboro;
 }
 
 .logo {

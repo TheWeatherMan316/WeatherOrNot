@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header"
 
-export default function TempHistory(props) {
+export default function TemperatureHistory(props) {
   const [sortedField, setSortedField] = useState(null);
 
-    const [...values] = props.tempHistoryArr
+    const [...values] = props.temperatureMeasurements
     let sortedArray = [...values]
     let reversedArray = sortedArray.reverse()
 
@@ -19,7 +19,7 @@ export default function TempHistory(props) {
       return 0;
     });
 
-    const tempHistory = reversedArray.map((element) => (
+    const temperatureHistory = reversedArray.map((element) => (
         <>
           <tr key={element.time}>
             <td>{element.time.toLocaleDateString("de-DE")}</td>
@@ -37,6 +37,7 @@ export default function TempHistory(props) {
             <Link to="/home">
               <button className="button">Back</button>
             </Link>
+            <h3 className="headings">Temperature History</h3>
             <table>
               <tr>
                 <th>
@@ -53,7 +54,7 @@ export default function TempHistory(props) {
             </button>
                 </th>
               </tr>
-              {tempHistory}
+              {temperatureHistory}
             </table>
           </div>
           </>

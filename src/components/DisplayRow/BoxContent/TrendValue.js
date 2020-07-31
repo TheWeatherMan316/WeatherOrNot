@@ -4,10 +4,10 @@ import stableIcon from "./stable.svg";
 import riseIcon from "./rise.svg";
 import hourGlass from "./hourglass.svg"
 
-function getCurrentTrend(barHistory) {
+function getCurrentTrend(barometricHistory) {
 try {
-      const pressureDifference = barHistory[barHistory.length - 1].value - barHistory[barHistory.length - 2].value;
-  const timeDifference = barHistory[barHistory.length - 1].time - barHistory[barHistory.length - 2].time;
+      const pressureDifference = barometricHistory[barometricHistory.length - 1].value - barometricHistory[barometricHistory.length - 2].value;
+  const timeDifference = barometricHistory[barometricHistory.length - 1].time - barometricHistory[barometricHistory.length - 2].time;
 
   const standardBarDiff = 10;
   const standardTimeDiff = 10000;

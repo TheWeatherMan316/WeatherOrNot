@@ -1,56 +1,52 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import BarHistory from "./components/BarHistory"
-import TempHistory from "./components/TempHistory"
-import Home from "./components/Home"
+import BarometricHistory from "./components/BarometricHistory";
+import TemperatureHistory from "./components/TemperatureHistory";
+import Home from "./components/Home";
 
-const tempHistoryArr = [];
+const temperatureMeasurements = [{value: 1, time: new Date}];
+// Todo: error handling instead of initial value...
 
-const barHistArr = [];
+const barometricMeasurements = [];
 
 function App() {
-  const [temp, setTemp] = useState(0);
   const [bar, setBar] = useState(0);
 
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
   }
 
-  const measureTemp = () => {
-    const newTemp = getRandomValue(-20, 40);
-    const tempTime = new Date();
-    setTemp(newTemp);
-    storeTemp(newTemp, tempTime);
+  const measureTemperature = () => {
+    const newTemperature = getRandomValue(-20, 40);
+    const temperatureTime = new Date();
+    storeTemperatureAndCalcAverage(newTemperature, temperatureTime);
   };
 
-  function storeTemp(newTemp, tempTime) {
-    const tempHistElement = {
-      value: newTemp,
-      time: tempTime,
+  function storeTemperatureAndCalcAverage(newTemperature, temperatureTime) {
+    const singleMeasurement = {
+      value: newTemperature,
+      time: temperatureTime,
     };
-    tempHistoryArr.push(tempHistElement);
+    temperatureMeasurements.push(singleMeasurement);
+    calcAverageTemperature();
   }
 
-  function calcAverageTemp() {
+  function calcAverageTemperature() {
     let sum = 0;
-    for (let i = 0; i < tempHistoryArr.length; i++) {
-      sum += tempHistoryArr[i].value;
+    for (let i = 0; i < temperatureMeasurements.length; i++) {
+      sum += temperatureMeasurements[i].value;
     }
-    let averageTemp = sum / tempHistoryArr.length;
-    return averageTemp;
+    let averageTemperature = sum / temperatureMeasurements.length;
+    return averageTemperature;
   }
 
   useEffect(() => {
     setInterval(() => {
-      measureTemp();
+      measureTemperature();
     }, 2000);
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    calcAverageTemp();
-  }, [temp]);
 
   const measureBar = () => {
     const newBar = getRandomValue(980, 1050);
@@ -60,12 +56,12 @@ function App() {
   };
 
   function storeBar(newBar, barTime) {
-    const barHistElement = {
+    const singleMeasurement = {
       value: newBar,
       time: barTime,
     };
 
-    barHistArr.push(barHistElement);
+    barometricMeasurements.push(singleMeasurement);
   }
 
   useEffect(() => {
@@ -80,9 +76,22 @@ function App() {
       <div className="container">
         <Router>
           <Switch>
-            <Route path="/tempHist"><TempHistory tempHistoryArr={tempHistoryArr} /></Route>
-            <Route path="/barHist"><BarHistory barHistArr={barHistArr} /></Route>
-            <Route path="/home">< Home temp={temp} measureTemp={measureTemp} calcAverageTemp={calcAverageTemp} bar={bar} measureBar={measureBar} barHistArr={barHistArr}/></Route>
+            <Route path="/temperature_history">
+              <TemperatureHistory temperatureMeasurements={temperatureMeasurements} />
+            </Route>
+            <Route path="/barometric_history">
+              <BarometricHistory barometricMeasurements={barometricMeasurements} />
+            </Route>
+            <Route path="/home">
+              <Home
+                temperatureMeasurements={temperatureMeasurements}
+                measureTemperature={measureTemperature}
+                calcAverageTemperature={calcAverageTemperature}
+                bar={bar}
+                measureBar={measureBar}
+                barometricMeasurements={barometricMeasurements}
+              />
+            </Route>
           </Switch>
         </Router>
       </div>
@@ -91,4 +100,3 @@ function App() {
 }
 
 export default App;
-
