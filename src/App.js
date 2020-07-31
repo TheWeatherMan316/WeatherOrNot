@@ -5,11 +5,10 @@ import BarometricHistory from "./components/BarometricHistory";
 import TemperatureHistory from "./components/TemperatureHistory";
 import Home from "./components/Home";
 
-const barometricMeasurements = [];
 
 function App() {
-  const [bar, setBar] = useState(0);
-  const [temperatureMeasurements, setTemperatureMeasurements] = useState([{value: 0, time: Date.now()}])
+  const [temperatureMeasurements, setTemperatureMeasurements] = useState([{value: 0, time: new Date()}])
+  const [barometricMeasurements, setBarometricMeasurements] = useState([{value: 0, time: new Date()}])
 
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
@@ -18,10 +17,10 @@ function App() {
   const measureTemperature = () => {
     const newTemperature = getRandomValue(-20, 40);
     const temperatureTime = new Date();
-    storeTemperatureAndCalcAverage(newTemperature, temperatureTime);
+    storeTemperature(newTemperature, temperatureTime);
   };
 
-  function storeTemperatureAndCalcAverage(newTemperature, measurementTime) {
+  function storeTemperature(newTemperature, measurementTime) {
     const latestMeasurement = {
       value: newTemperature,
       time: measurementTime,
@@ -40,18 +39,18 @@ function App() {
 
   const measureBarometricPressure = () => {
     const newPressure = getRandomValue(980, 1050);
-    setBar(newPressure);
     const measurementTime = new Date();
     storeBarometricPressure(newPressure, measurementTime);
   };
 
   function storeBarometricPressure(newPressure, measurementTime) {
-    const singleMeasurement = {
+    const latestMeasurement = {
       value: newPressure,
       time: measurementTime,
     };
 
-    barometricMeasurements.push(singleMeasurement);
+    const newArray = [...barometricMeasurements, latestMeasurement]
+    setBarometricMeasurements(newArray)
   }
 
   useEffect(() => {
@@ -76,7 +75,6 @@ function App() {
               <Home
                 temperatureMeasurements={temperatureMeasurements}
                 measureTemperature={measureTemperature}
-                bar={bar}
                 measureBarometricPressure={measureBarometricPressure}
                 barometricMeasurements={barometricMeasurements}
               />

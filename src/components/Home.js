@@ -8,13 +8,9 @@ import TrendValue from "./DisplayRow/BoxContent/TrendValue";
 import { Link } from "react-router-dom";
 
 export default function Home(props) {
-  const temperature = () => {
-    if (props.temperatureMeasurements === undefined) {
-      return 0;
-    } else {
-      return props.temperatureMeasurements[props.temperatureMeasurements.length - 1].value;
-    }
-  };
+  
+  const temperature = props.temperatureMeasurements[props.temperatureMeasurements.length - 1].value;
+  const barometricPressure = props.barometricMeasurements[props.barometricMeasurements.length - 1].value;
 
   function checkIfBarIsZero(bar) {
     if (bar === 0) {
@@ -49,7 +45,7 @@ export default function Home(props) {
         <DisplayRow label="Date" display={<CurrentDate time={false} />} />
         <DisplayRow
           label="Temperature"
-          display={<UnitValue value={checkIfTempIsZero(temperature())} unit="°C" />}
+          display={<UnitValue value={checkIfTempIsZero(temperature)} unit="°C" />}
           action={<Controls action={props.measureTemperature} buttonLabel="measure" />}
           history={
             <Link to="/temperature_history">
@@ -63,7 +59,7 @@ export default function Home(props) {
         />
         <DisplayRow
           label="Barometric Pressure"
-          display={<UnitValue value={checkIfBarIsZero(props.bar)} unit="mbar" />}
+          display={<UnitValue value={checkIfBarIsZero(barometricPressure)} unit="mbar" />}
           action={<Controls action={props.measureBar} buttonLabel="measure" />}
           history={
             <Link to="/barometric_history">
