@@ -7,6 +7,7 @@ import Home from "./components/Home";
 
 
 function App() {
+
   const [temperatureMeasurements, setTemperatureMeasurements] = useState([{value: 0, time: new Date()}])
   const [barometricMeasurements, setBarometricMeasurements] = useState([{value: 0, time: new Date()}])
 
@@ -16,8 +17,8 @@ function App() {
 
   const measureTemperature = () => {
     const newTemperature = getRandomValue(-20, 40);
-    const temperatureTime = new Date();
-    storeTemperature(newTemperature, temperatureTime);
+    const measurementTime = new Date();
+    storeTemperature(newTemperature, measurementTime);
   };
 
   function storeTemperature(newTemperature, measurementTime) {
@@ -25,7 +26,7 @@ function App() {
       value: newTemperature,
       time: measurementTime,
     };
-
+    console.log(temperatureMeasurements)
     const newArray = [...temperatureMeasurements, latestMeasurement]
     setTemperatureMeasurements(newArray)
   }

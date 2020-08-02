@@ -60,7 +60,7 @@ export default function Home(props) {
         <DisplayRow
           label="Barometric Pressure"
           display={<UnitValue value={checkIfBarIsZero(barometricPressure)} unit="mbar" />}
-          action={<Controls action={props.measureBar} buttonLabel="measure" />}
+          action={<Controls action={props.measureBarometricPressure} buttonLabel="measure" />}
           history={
             <Link to="/barometric_history">
               <button className="button">History</button>

@@ -19,13 +19,13 @@ export default function BarometricHistory(props) {
     return 0;
   });
   const barometricHistory = reversedArray.map((element) => (
-    <>
+  
       <tr key={element.time}>
         <td>{element.time.toLocaleDateString("de-DE")}</td>
         <td>{element.time.toLocaleTimeString("de-DE")}</td>
         <td>{element.value.toFixed(0).toString()} mBar</td>
       </tr>
-    </>
+  
   ));
 
   return (
@@ -37,30 +37,34 @@ export default function BarometricHistory(props) {
         </Link>
         <h3 className="headings">Barometric Pressure History</h3>
         <table>
-          <tr>
-            <th>Date</th>
-            <th>
-              {" "}
-              <button
-                type="button"
-                className="buttonTableSort"
-                onClick={() => setSortedField("time")}
-              >
-                Time ↑
-              </button>
-            </th>
-            <th>
-              {" "}
-              <button
-                type="button"
-                className="buttonTableSort"
-                onClick={() => setSortedField("value")}
-              >
-                Measurement ↑
-              </button>
-            </th>
-          </tr>
-          {barometricHistory}
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>
+                {" "}
+                <button
+                  type="button"
+                  className="buttonTableSort"
+                  onClick={() => setSortedField("time")}
+                >
+                  Time ↑
+                </button>
+              </th>
+              <th>
+                {" "}
+                <button
+                  type="button"
+                  className="buttonTableSort"
+                  onClick={() => setSortedField("value")}
+                >
+                  Measurement ↑
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {barometricHistory}            
+          </tbody>
         </table>
       </div>
     </>
