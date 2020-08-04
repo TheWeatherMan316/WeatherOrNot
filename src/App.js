@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import BarometricHistory from "./components/BarometricHistory";
 import TemperatureHistory from "./components/TemperatureHistory";
 import Home from "./components/Home";
+import Routes from "./Routes"
 
 
 function App() {
@@ -66,13 +67,13 @@ function App() {
       <div className="container">
         <Router>
           <Switch>
-            <Route path="/temperature_history">
+            <Route path={Routes.temperatureHistory}>
               <TemperatureHistory temperatureMeasurements={temperatureMeasurements} />
             </Route>
-            <Route path="/barometric_history">
+            <Route path={Routes.barometricHistory}>
               <BarometricHistory barometricMeasurements={barometricMeasurements} />
             </Route>
-            <Route path="/home">
+            <Route path={Routes.home}>
               <Home
                 temperatureMeasurements={temperatureMeasurements}
                 measureTemperature={measureTemperature}

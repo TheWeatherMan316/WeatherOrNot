@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import Routes from "../Routes";
+
 
 export default function TemperatureHistory(props) {
   const [sortedField, setSortedField] = useState(null);
@@ -34,7 +36,7 @@ export default function TemperatureHistory(props) {
     <>
       <Header />
       <div className="history">
-        <Link to="/home">
+        <Link to={Routes.home}>
           <button className="button">Back</button>
         </Link>
         <h3 className="headings">Temperature History</h3>
