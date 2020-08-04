@@ -7,9 +7,9 @@ import Routes from "../Routes";
 export default function BarometricHistory(props) {
   const [sortedField, setSortedField] = useState(null);
 
-  const [...values] = props.barometricMeasurements;
-  let sortedArray = [...values];
-  let reversedArray = sortedArray.reverse();
+  const newArray = [];
+  newArray.push(...props.barometricMeasurements)
+  let reversedArray = newArray.reverse();
 
   reversedArray.sort((a, b) => {
     if (a[sortedField] < b[sortedField]) {

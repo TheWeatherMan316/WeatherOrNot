@@ -6,11 +6,10 @@ import Routes from "../Routes";
 
 export default function TemperatureHistory(props) {
   const [sortedField, setSortedField] = useState(null);
-  console.log(props.temperatureMeasurements)
-
-  const [...values] = props.temperatureMeasurements;
-  let sortedArray = [...values];
-  let reversedArray = sortedArray.reverse();
+  
+  const newArray = [];
+  newArray.push(...props.temperatureMeasurements)
+  let reversedArray = newArray.reverse();
 
   reversedArray.sort((a, b) => {
     if (a[sortedField] < b[sortedField]) {
@@ -22,7 +21,6 @@ export default function TemperatureHistory(props) {
     return 0;
   });
 
-  console.log(reversedArray);
 
   const temperatureHistory = reversedArray.map((element) => (
     <tr key={element.time}>

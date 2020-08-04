@@ -1,8 +1,8 @@
 import React from "react";
 import hourGlass from "./hourglass.svg";
 
-export default function UnitValue(props) {
-  if (props.value === null) {
+export default function AverageValue(props) {
+  if (props.value === "NaN") {
     return (
       <>
         <img className="--Icon" src={hourGlass} alt="" />
@@ -15,7 +15,7 @@ export default function UnitValue(props) {
     return (
       <p>
         <b>
-          {props.value.toFixed(props.toFixed)} {props.unit}
+          {props.value} {props.unit}
         </b>
       </p>
     );

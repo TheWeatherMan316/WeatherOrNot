@@ -9,8 +9,8 @@ import Routes from "./Routes"
 
 function App() {
 
-  const [temperatureMeasurements, setTemperatureMeasurements] = useState([{value: 0, time: new Date()}])
-  const [barometricMeasurements, setBarometricMeasurements] = useState([{value: 0, time: new Date()}])
+  const [temperatureMeasurements, setTemperatureMeasurements] = useState([])
+  const [barometricMeasurements, setBarometricMeasurements] = useState([])
 
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
@@ -27,9 +27,8 @@ function App() {
       value: newTemperature,
       time: measurementTime,
     };
-    console.log(temperatureMeasurements)
-    const newArray = [...temperatureMeasurements, latestMeasurement]
-    setTemperatureMeasurements(newArray)
+    temperatureMeasurements.push(latestMeasurement)
+    setTemperatureMeasurements([...temperatureMeasurements])
   }
 
   useEffect(() => {
@@ -50,9 +49,8 @@ function App() {
       value: newPressure,
       time: measurementTime,
     };
-
-    const newArray = [...barometricMeasurements, latestMeasurement]
-    setBarometricMeasurements(newArray)
+    barometricMeasurements.push(latestMeasurement)
+    setBarometricMeasurements([...barometricMeasurements])
   }
 
   useEffect(() => {
