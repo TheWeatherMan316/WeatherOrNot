@@ -4,13 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import BarometricHistory from "./components/BarometricHistory";
 import TemperatureHistory from "./components/TemperatureHistory";
 import Home from "./components/Home";
-import Routes from "./Routes"
-
+import Routes from "./Routes";
 
 function App() {
-
-  const [temperatureMeasurements, setTemperatureMeasurements] = useState([])
-  const [barometricMeasurements, setBarometricMeasurements] = useState([])
+  console.log("app init")
+  const [temperatureMeasurements, setTemperatureMeasurements] = useState([]);
+  const [barometricMeasurements, setBarometricMeasurements] = useState([]);
 
   function getRandomValue(min, max) {
     return Math.random() * (max - min) + min;
@@ -27,8 +26,8 @@ function App() {
       value: newTemperature,
       time: measurementTime,
     };
-    temperatureMeasurements.push(latestMeasurement)
-    setTemperatureMeasurements([...temperatureMeasurements])
+    const newTemperatureMeasurements = [...temperatureMeasurements, latestMeasurement];
+    setTemperatureMeasurements(newTemperatureMeasurements);
   }
 
   useEffect(() => {
@@ -49,8 +48,8 @@ function App() {
       value: newPressure,
       time: measurementTime,
     };
-    barometricMeasurements.push(latestMeasurement)
-    setBarometricMeasurements([...barometricMeasurements])
+    barometricMeasurements.push(latestMeasurement);
+    setBarometricMeasurements([...barometricMeasurements]);
   }
 
   useEffect(() => {
@@ -74,8 +73,8 @@ function App() {
             <Route path={Routes.home}>
               <Home
                 temperatureMeasurements={temperatureMeasurements}
-                measureTemperature={measureTemperature}
-                measureBarometricPressure={measureBarometricPressure}
+                onMeasureTemperatureClicked={() => measureTemperature()}
+                onMeasureBarometricPressureClicked={() => measureBarometricPressure()}
                 barometricMeasurements={barometricMeasurements}
               />
             </Route>

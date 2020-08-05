@@ -32,7 +32,7 @@ export default function Home(props) {
         <DisplayRow
           label="Temperature"
           display={<UnitValue value={temperature()} unit="°C" toFixed = {1} />}
-          action={<Controls action={props.measureTemperature} buttonLabel="measure" />}
+          action={<Controls action={props.onMeasureTemperatureClicked} buttonLabel="measure" />}
           history={
             <Link to="/temperature_history">
               <button className="button">History</button>
@@ -46,7 +46,7 @@ export default function Home(props) {
         <DisplayRow
           label="Barometric Pressure"
           display={<UnitValue value={barometricPressure()} unit="mbar"  toFixed = {1} />}
-          action={<Controls action={props.measureBarometricPressure} buttonLabel="measure" />}
+          action={<Controls action={props.onMeasureBarometricPressureClicked} buttonLabel="measure" />}
           history={
             <Link to="/barometric_history">
               <button className="button">History</button>

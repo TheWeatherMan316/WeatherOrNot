@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 4200;
 const temperatureMeasurements = [{ value: 10, time: new Date() }];
@@ -11,6 +12,7 @@ setInterval(() => {
       temperatureMeasurements.push(newTemperatureMeasurement);
 }, 2000)
 
+app.use(cors())
 app.get("/api/temperatures", (req, res) => {
   console.log("got request");
   res.json(temperatureMeasurements);
