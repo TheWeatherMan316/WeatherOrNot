@@ -1,42 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import Routes from "../Routes";
 
 export default function TemperatureHistory(props) {
-  const [sortedField, setSortedField] = useState(null);
-  const [temperatures, setTemperatures] = useState([]);
+  // eslint-disable-next-line
+  const [sortedField, setSortedField] = useState("time");
+  const [sortingDirection, setSortingDirection] = useState("desc");
 
-  useEffect(() => {
-    fetch("http://localhost:4200/api/temperatures").then(r => r.json())
-    .then((res) => {
-      const currentTemperatures = res.map(r => ({value: r.value, time: new Date(r.time)}))
-      console.log(currentTemperatures)
-      setTemperatures(currentTemperatures)
-    });
-  }, []);
+  const newArray = [...props.temperatureMeasurements];
 
-  const newArray = [];
-  newArray.push(...props.temperatureMeasurements);
-  let reversedArray = newArray.reverse();
-
-  reversedArray.sort((a, b) => {
+  newArray.sort((a, b) => {
     if (a[sortedField] < b[sortedField]) {
-      return 1;
+      if (sortingDirection === "desc") {
+        return 1;
+      } else if (sortingDirection === "asc") {
+        return -1;
+      }
     }
     if (a[sortedField] > b[sortedField]) {
-      return -1;
+      if (sortingDirection === "desc") {
+        return -1;
+      } else if (sortingDirection === "asc") {
+        return 1;
+      }
     }
     return 0;
   });
 
-  const temperatureHistory = temperatures.map((element) => (
-    <tr key={element.time}>
+  const temperatureHistory = newArray.map((element) => (
+    <tr key={newArray.indexOf(element)}>
       <td>{element.time.toLocaleDateString("de-DE")}</td>
       <td>{element.time.toLocaleTimeString("de-DE")}</td>
       <td>{element.value.toFixed(1).toString()}°C</td>
     </tr>
   ));
+
+  function switchSortingDirection() {
+    if (sortingDirection === "desc") {
+      setSortingDirection("asc");
+    } else if (sortingDirection === "asc") {
+      setSortingDirection("desc");
+    }
+  }
 
   return (
     <>
@@ -54,18 +60,24 @@ export default function TemperatureHistory(props) {
                 <button
                   type="button"
                   className="buttonTableSort"
-                  onClick={() => setSortedField("time")}
+                  onClick={() => {
+                    setSortedField("time");
+                    switchSortingDirection();
+                  }}
                 >
-                  Time ↑
+                  Time ↕
                 </button>
               </th>
               <th>
                 <button
                   type="button"
                   className="buttonTableSort"
-                  onClick={() => setSortedField("value")}
+                  onClick={() => {
+                    setSortedField("value");
+                    switchSortingDirection();
+                  }}
                 >
-                  Measurement ↑
+                  Measurement ↕
                 </button>
               </th>
             </tr>

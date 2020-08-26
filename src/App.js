@@ -7,57 +7,48 @@ import Home from "./components/Home";
 import Routes from "./Routes";
 
 function App() {
-  console.log("app init")
   const [temperatureMeasurements, setTemperatureMeasurements] = useState([]);
   const [barometricMeasurements, setBarometricMeasurements] = useState([]);
 
-  function getRandomValue(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  const measureTemperature = () => {
-    const newTemperature = getRandomValue(-20, 40);
-    const measurementTime = new Date();
-    storeTemperature(newTemperature, measurementTime);
-  };
-
-  function storeTemperature(newTemperature, measurementTime) {
-    const latestMeasurement = {
-      value: newTemperature,
-      time: measurementTime,
-    };
-    const newTemperatureMeasurements = [...temperatureMeasurements, latestMeasurement];
-    setTemperatureMeasurements(newTemperatureMeasurements);
-  }
-
   useEffect(() => {
     setInterval(() => {
-      measureTemperature();
+      fetch("http://localhost:4200/api/temperatures")
+        .then((r) => r.json())
+        .then((res) => {
+          const currentTemperatures = res.map((r) => ({ value: r.value, time: new Date(r.time) }));
+          setTemperatureMeasurements(currentTemperatures);
+        });
     }, 2000);
-    // eslint-disable-next-line
   }, []);
 
-  const measureBarometricPressure = () => {
-    const newPressure = getRandomValue(980, 1050);
-    const measurementTime = new Date();
-    storeBarometricPressure(newPressure, measurementTime);
-  };
-
-  function storeBarometricPressure(newPressure, measurementTime) {
-    const latestMeasurement = {
-      value: newPressure,
-      time: measurementTime,
-    };
-    barometricMeasurements.push(latestMeasurement);
-    setBarometricMeasurements([...barometricMeasurements]);
+  function measureTemperature() {
+    fetch("http://localhost:4200/api/readTemperature")
+      .then((r) => r.json())
+      .then((res) => {
+        const currentTemperatures = res.map((r) => ({ value: r.value, time: new Date(r.time) }));
+        setTemperatureMeasurements(currentTemperatures);
+      });
   }
 
   useEffect(() => {
     setInterval(() => {
-      measureBarometricPressure();
+      fetch("http://localhost:4200/api/pressures")
+        .then((r) => r.json())
+        .then((res) => {
+          const currentPressures = res.map((r) => ({ value: r.value, time: new Date(r.time) }));
+          setBarometricMeasurements(currentPressures);
+        });
     }, 5000);
-    // eslint-disable-next-line
   }, []);
+
+  function measureBarometricPressure() {
+    fetch("http://localhost:4200/api/readPressure")
+      .then((r) => r.json())
+      .then((res) => {
+        const currentPressures = res.map((r) => ({ value: r.value, time: new Date(r.time) }));
+        setBarometricMeasurements(currentPressures);
+      });
+  }
 
   return (
     <div className="app" align="center">

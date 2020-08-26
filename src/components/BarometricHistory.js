@@ -3,32 +3,47 @@ import { Link } from "react-router-dom";
 import Header from "./Header";
 import Routes from "../Routes";
 
-
 export default function BarometricHistory(props) {
   const [sortedField, setSortedField] = useState(null);
+  const [sortingDirection, setSortingDirection] = useState("desc");
 
   const newArray = [];
-  newArray.push(...props.barometricMeasurements)
+  newArray.push(...props.barometricMeasurements);
   let reversedArray = newArray.reverse();
 
   reversedArray.sort((a, b) => {
     if (a[sortedField] < b[sortedField]) {
-      return 1;
+      if (sortingDirection === "desc") {
+        return 1;
+      } else if (sortingDirection === "asc") {
+        return -1;
+      }
     }
     if (a[sortedField] > b[sortedField]) {
-      return -1;
+      if (sortingDirection === "desc") {
+        return -1;
+      } else if (sortingDirection === "asc") {
+        return 1;
+      }
     }
     return 0;
   });
+
   const barometricHistory = reversedArray.map((element) => (
-  
-      <tr key={element.time}>
-        <td>{element.time.toLocaleDateString("de-DE")}</td>
-        <td>{element.time.toLocaleTimeString("de-DE")}</td>
-        <td>{element.value.toFixed(0).toString()} mBar</td>
-      </tr>
-  
+    <tr key={reversedArray.indexOf(element)}>
+      <td>{element.time.toLocaleDateString("de-DE")}</td>
+      <td>{element.time.toLocaleTimeString("de-DE")}</td>
+      <td>{element.value.toFixed(0).toString()} mBar</td>
+    </tr>
   ));
+
+  function switchSortingDirection() {
+    if (sortingDirection === "desc") {
+      setSortingDirection("asc");
+    } else if (sortingDirection === "asc") {
+      setSortingDirection("desc");
+    }
+  }
 
   return (
     <>
@@ -47,9 +62,12 @@ export default function BarometricHistory(props) {
                 <button
                   type="button"
                   className="buttonTableSort"
-                  onClick={() => setSortedField("time")}
+                  onClick={() => {
+                    setSortedField("time");
+                    switchSortingDirection();
+                  }}
                 >
-                  Time ↑
+                  Time ↕
                 </button>
               </th>
               <th>
@@ -57,16 +75,17 @@ export default function BarometricHistory(props) {
                 <button
                   type="button"
                   className="buttonTableSort"
-                  onClick={() => setSortedField("value")}
+                  onClick={() => {
+                    setSortedField("value");
+                    switchSortingDirection();
+                  }}
                 >
-                  Measurement ↑
+                  Measurement ↕
                 </button>
               </th>
             </tr>
           </thead>
-          <tbody>
-          {barometricHistory}            
-          </tbody>
+          <tbody>{barometricHistory}</tbody>
         </table>
       </div>
     </>
