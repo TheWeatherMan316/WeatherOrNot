@@ -1,7 +1,8 @@
-import { setBackgroundTasks } from "./tasks/backgroundTasks.js";
 import { getApiRoutes } from "./api.js";
 import express from "express";
 import cors from "cors";
+import { setBackgroundTasks } from "./tasks/backgroundTasks.js";
+
 export const app = express();
 export const port = 4200;
 

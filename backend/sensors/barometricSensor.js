@@ -1,12 +1,14 @@
 import getRandomValue from "./simulator.js"
-import { saveBarometricMeasurement } from "../database.js";
+
 
 export function measureBarometricPressure() {
     const newPressure = getRandomValue(980, 1050);
+    const inchMercury = newPressure*0.029530;
     const measurementTime = new Date();
     const latestMeasurement = {
-      value: newPressure,
+      valueMetric: newPressure,
+      valueImperial: inchMercury,
       time: measurementTime,
     };
-    saveBarometricMeasurement(latestMeasurement);
+    return latestMeasurement;
   }

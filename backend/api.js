@@ -1,8 +1,9 @@
-
 import { temperatureMeasurements } from "./database.js";
 import { barometricMeasurements } from "./database.js";
 import { measureTemperature } from "./sensors/temperatureSensor.js";
 import { measureBarometricPressure } from "./sensors/barometricSensor.js";
+import { saveTemperatureMeasurement } from "./database.js";
+import { saveBarometricMeasurement } from "./database.js";
 import express from "express";
 
 export function getApiRoutes() {
@@ -13,7 +14,7 @@ export function getApiRoutes() {
   });
 
   router.get("/api/readTemperature", (req, res) => {
-    measureTemperature();
+    saveTemperatureMeasurement(measureTemperature());
     res.json(temperatureMeasurements);
   });
 
@@ -22,9 +23,9 @@ export function getApiRoutes() {
   });
 
   router.get("/api/readPressure", (req, res) => {
-    measureBarometricPressure();
+    saveBarometricMeasurement(measureBarometricPressure());
     res.json(barometricMeasurements);
   });
 
-  return router
+  return router;
 }

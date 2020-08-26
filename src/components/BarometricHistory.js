@@ -7,11 +7,12 @@ export default function BarometricHistory(props) {
   const [sortedField, setSortedField] = useState(null);
   const [sortingDirection, setSortingDirection] = useState("desc");
 
+  const valueToSortBy = props.system === "metric" ? "valueMetric" : "valueImperial";
+
   const newArray = [];
   newArray.push(...props.barometricMeasurements);
-  let reversedArray = newArray.reverse();
 
-  reversedArray.sort((a, b) => {
+  newArray.sort((a, b) => {
     if (a[sortedField] < b[sortedField]) {
       if (sortingDirection === "desc") {
         return 1;
@@ -29,13 +30,20 @@ export default function BarometricHistory(props) {
     return 0;
   });
 
-  const barometricHistory = reversedArray.map((element) => (
-    <tr key={reversedArray.indexOf(element)}>
+  const barometricHistory = props.system === "metric" ? newArray.map((element) => (
+    <tr key={newArray.indexOf(element)}>
       <td>{element.time.toLocaleDateString("de-DE")}</td>
       <td>{element.time.toLocaleTimeString("de-DE")}</td>
-      <td>{element.value.toFixed(0).toString()} mBar</td>
+      <td>{element.valueMetric.toFixed(0).toString()} mBar</td>
     </tr>
-  ));
+  )) : newArray.map((element) => (
+    <tr key={newArray.indexOf(element)}>
+      <td>{element.time.toLocaleDateString("de-DE")}</td>
+      <td>{element.time.toLocaleTimeString("de-DE")}</td>
+      <td>{element.valueImperial.toFixed(4).toString()} inHg</td>
+    </tr>
+  )) 
+
 
   function switchSortingDirection() {
     if (sortingDirection === "desc") {
@@ -76,7 +84,7 @@ export default function BarometricHistory(props) {
                   type="button"
                   className="buttonTableSort"
                   onClick={() => {
-                    setSortedField("value");
+                    setSortedField(valueToSortBy);
                     switchSortingDirection();
                   }}
                 >

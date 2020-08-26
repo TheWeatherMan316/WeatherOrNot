@@ -1,12 +1,13 @@
 import {measureTemperature} from "../sensors/temperatureSensor.js"
 import {measureBarometricPressure} from "../sensors/barometricSensor.js"
+import { saveTemperatureMeasurement, saveBarometricMeasurement } from "../database.js";
 
 export function setBackgroundTasks() {
   setInterval(() => {
-    measureTemperature();
+    saveTemperatureMeasurement(measureTemperature());
   }, 2000);
 
   setInterval(() => {
-    measureBarometricPressure();
+    saveBarometricMeasurement(measureBarometricPressure());
   }, 5000);
 }

@@ -10,6 +10,11 @@
   box-shadow: 3px 3px 3px #606060;
 }
 
+.toggle-container {
+  max-width: 600px;
+  align-items: center;
+}
+
 .DisplayRow {
   margin-bottom: 10px;
   display: flex;
@@ -162,4 +167,37 @@ th {
 
 tr:nth-child(even) {
   background-color: #597087;
+}
+
+.toggle-button-active {
+  background-color: #637d96;
+  border: 1px solid #2b3a44;
+  color: white;
+  margin: 15px 0px 0px 0px;
+  width: 60px;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.toggle-button-inactive {
+  background-color: #ffffff;
+  border: 1px solid #adb9c0;
+  color: #adb9c0;
+  margin: 15px 0px 0px 0px;
+  width: 60px;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.toggle-button-inactive:hover {
+  border: 1px solid #5b6e79;
+  color: #5b6e79;
 }

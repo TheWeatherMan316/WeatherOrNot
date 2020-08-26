@@ -9,6 +9,7 @@ export default function TemperatureHistory(props) {
   const [sortingDirection, setSortingDirection] = useState("desc");
 
   const newArray = [...props.temperatureMeasurements];
+  const valueToSortBy = props.system === "metric" ? "valueMetric" : "valueImperial";
 
   newArray.sort((a, b) => {
     if (a[sortedField] < b[sortedField]) {
@@ -28,13 +29,22 @@ export default function TemperatureHistory(props) {
     return 0;
   });
 
-  const temperatureHistory = newArray.map((element) => (
-    <tr key={newArray.indexOf(element)}>
-      <td>{element.time.toLocaleDateString("de-DE")}</td>
-      <td>{element.time.toLocaleTimeString("de-DE")}</td>
-      <td>{element.value.toFixed(1).toString()}°C</td>
-    </tr>
-  ));
+  const temperatureHistory =
+    props.system === "metric"
+      ? newArray.map((element) => (
+          <tr key={newArray.indexOf(element)}>
+            <td>{element.time.toLocaleDateString("de-DE")}</td>
+            <td>{element.time.toLocaleTimeString("de-DE")}</td>
+            <td>{element.valueMetric.toFixed(1).toString()}°C</td>
+          </tr>
+        ))
+      : newArray.map((element) => (
+          <tr key={newArray.indexOf(element)}>
+            <td>{element.time.toLocaleDateString("de-DE")}</td>
+            <td>{element.time.toLocaleTimeString("de-DE")}</td>
+            <td>{element.valueImperial.toFixed(1).toString()}°F</td>
+          </tr>
+        ));
 
   function switchSortingDirection() {
     if (sortingDirection === "desc") {
@@ -73,7 +83,7 @@ export default function TemperatureHistory(props) {
                   type="button"
                   className="buttonTableSort"
                   onClick={() => {
-                    setSortedField("value");
+                    setSortedField(valueToSortBy);
                     switchSortingDirection();
                   }}
                 >
