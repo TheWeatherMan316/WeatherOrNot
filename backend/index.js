@@ -1,31 +1,45 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
+import {temperatureMeasurements} from "./database.js";
+import {barometricMeasurements} from "./database.js";
+import {measureTemperature} from "./sensors/temperatureSensor.js"
+import {measureBarometricPressure} from "./sensors/barometricSensor.js"
+import express from "express";
+import cors from "cors";
+import fs from "fs";
+const app = express(); // initialisierung
 const port = 4200;
-const temperatureMeasurements = [{ value: 10, time: new Date() }];
 
+function getRandomValue(min, max) {
+  return Math.random() * (max - min) + min;
+}
+// background tasks
 setInterval(() => {
-    const newTemperatureMeasurement = {
-        value: 15,
-        time: new Date(),
-      };
-      temperatureMeasurements.push(newTemperatureMeasurement);
-}, 2000)
+  measureTemperature();
+}, 2000);
 
-app.use(cors())
+// background service
+setInterval(() => {
+  measureBarometricPressure();
+}, 5000);
+ 
+// Routen
+app.use(cors());
+
 app.get("/api/temperatures", (req, res) => {
-  console.log("got request");
   res.json(temperatureMeasurements);
 });
 
-app.post("/api/readTemperature", (req, res) => {
-  console.log("got request to read temperature");
-  const newTemperatureMeasurement = {
-    value: 15,
-    time: new Date(),
-  };
-  temperatureMeasurements.push(newTemperatureMeasurement);
-  res.send()
+app.get("/api/readTemperature", (req, res) => {
+  measureTemperature();
+  res.json(temperatureMeasurements);
+});
+
+app.get("/api/pressures", (req, res) => {
+  res.json(barometricMeasurements);
+});
+
+app.get("/api/readPressure", (req, res) => {
+  measureBarometricPressure();
+  res.json(barometricMeasurements);
 });
 
 app.listen(port, () => {
