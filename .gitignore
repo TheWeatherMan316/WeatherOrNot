@@ -1,5 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+#files
+backend/data/barometricMeasurements.json
+backend/data/temperatureMeasurements.json
+
 # dependencies
 **/node_modules
 
