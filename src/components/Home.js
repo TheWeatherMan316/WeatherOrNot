@@ -13,35 +13,44 @@ export default function Home(props) {
   const pressureUnit = props.system === "metric" ? "mbar" : "inHg";
   function barometricValue() {
     if (props.system === "metric") {
-      return props.barometricMeasurements[props.barometricMeasurements.length - 1].valueMetric;
+      return props.barometricMeasurements[props.barometricMeasurements.length - 1].value;
     } else {
-      return props.barometricMeasurements[props.barometricMeasurements.length - 1].valueImperial;
+      const valueMetric =
+        props.barometricMeasurements[props.barometricMeasurements.length - 1].value;
+      const valueImperial = valueMetric * 0.02953;
+      return valueImperial;
     }
   }
 
-  function temperatureValue() {
+  function temperatureValue(index) {
     if (props.system === "metric") {
-      return props.temperatureMeasurements[props.temperatureMeasurements.length - 1].valueMetric;
+      return props.temperatureMeasurements[index].value;
     } else {
-      return props.temperatureMeasurements[props.temperatureMeasurements.length - 1].valueImperial;
+      const valueMetric =
+        props.temperatureMeasurements[props.temperatureMeasurements.length - 1].value;
+      const valueImperial = 1.8 * valueMetric + 32;
+      return valueImperial;
     }
   }
 
-  const temperature = props.temperatureMeasurements.length === 0 ? null : temperatureValue();
+  const temperature =
+    props.temperatureMeasurements.length === 0
+      ? null
+      : temperatureValue(props.temperatureMeasurements.length - 1);
   const barometricPressure = props.barometricMeasurements.length === 0 ? null : barometricValue();
 
   function calcAverageTemperature(temperatureMeasurements) {
     if (props.system === "metric") {
       let sum = 0;
       for (let i = 0; i < temperatureMeasurements.length; i++) {
-        sum += temperatureMeasurements[i].valueMetric;
+        sum += temperatureMeasurements[i].value;
       }
       let averageTemperature = sum / temperatureMeasurements.length;
       return averageTemperature;
     } else {
       let sum = 0;
       for (let i = 0; i < temperatureMeasurements.length; i++) {
-        sum += temperatureMeasurements[i].valueImperial;
+        sum += temperatureValue(i);
       }
       let averageTemperature = sum / temperatureMeasurements.length;
       return averageTemperature;
@@ -87,7 +96,7 @@ export default function Home(props) {
         />
         <DisplayRow
           label="Barometric Pressure Trend"
-          display={<TrendValue measurements={props.barometricMeasurements}  system={props.system}/>}
+          display={<TrendValue measurements={props.barometricMeasurements} system={props.system} />}
         />
       </>
     </div>

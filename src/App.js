@@ -18,8 +18,7 @@ function App() {
         .then((r) => r.json())
         .then((res) => {
           const currentTemperatures = res.map((r) => ({
-            valueMetric: r.valueMetric,
-            valueImperial: r.valueImperial,
+            value: r.value,
             time: new Date(r.time),
           }));
           setTemperatureMeasurements(currentTemperatures);
@@ -32,8 +31,7 @@ function App() {
       .then((r) => r.json())
       .then((res) => {
         const currentTemperatures = res.map((r) => ({
-          valueMetric: r.valueMetric,
-          valueImperial: r.valueImperial,
+          value: r.value,
           time: new Date(r.time),
         }));
         setTemperatureMeasurements(currentTemperatures);
@@ -46,8 +44,7 @@ function App() {
         .then((r) => r.json())
         .then((res) => {
           const currentPressures = res.map((r) => ({
-            valueMetric: r.valueMetric,
-            valueImperial: r.valueImperial,
+            value: r.value,
             time: new Date(r.time),
           }));
           setBarometricMeasurements(currentPressures);
@@ -60,8 +57,7 @@ function App() {
       .then((r) => r.json())
       .then((res) => {
         const currentPressures = res.map((r) => ({
-          valueMetric: r.valueMetric,
-          valueImperial: r.valueImperial,
+          value: r.value,
           time: new Date(r.time),
         }));
         setBarometricMeasurements(currentPressures);

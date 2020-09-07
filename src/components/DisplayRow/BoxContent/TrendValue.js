@@ -2,35 +2,41 @@ import React, { Fragment } from "react";
 import fallIcon from "./fall.svg";
 import stableIcon from "./stable.svg";
 import riseIcon from "./rise.svg";
-import hourGlass from "./hourglass.svg"
+import hourGlass from "./hourglass.svg";
 
-function getCurrentTrend(barometricHistory) {
-try {
-      const pressureDifference = barometricHistory[barometricHistory.length - 1].value - barometricHistory[barometricHistory.length - 2].value;
-  const timeDifference = barometricHistory[barometricHistory.length - 1].time - barometricHistory[barometricHistory.length - 2].time;
+function getCurrentTrend(barometricMeasurements) {
+  if (barometricMeasurements.length < 2) {
+    return "--";
+  } else {
+    const pressureDifference =
+      barometricMeasurements[barometricMeasurements.length - 1].value -
+      barometricMeasurements[barometricMeasurements.length - 2].value;
+    const timeDifference =
+      barometricMeasurements[barometricMeasurements.length - 1].time -
+      barometricMeasurements[barometricMeasurements.length - 2].time;
 
-  const standardBarDiff = 10;
-  const standardTimeDiff = 10000;
-  const standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
-  // standardGradient now: 0.001
+      console.log(pressureDifference)
+      console.log(timeDifference)
 
-  const gradient = Math.abs(pressureDifference / timeDifference);
+    const standardBarDiff = 10;
+    const standardTimeDiff = 10000;
+    const standardGradient = Math.abs(standardBarDiff / standardTimeDiff);
+    // standardGradient now: 0.001
 
-  if (pressureDifference >= 4 && gradient >= standardGradient) {
-    return "rising";
-  } else if (pressureDifference >= 4 && gradient < standardGradient) {
-    return "stable";
-  } else if (pressureDifference < 4 && pressureDifference > -4) {
-    return "stable";
-  } else if (pressureDifference <= -4 && gradient < standardGradient) {
-    return "stable";
-  } else if (pressureDifference <= -4 && gradient >= standardGradient) {
-    return "falling";
+    const gradient = Math.abs(pressureDifference / timeDifference);
+
+    if (pressureDifference >= 4 && gradient >= standardGradient) {
+      return "rising";
+    } else if (pressureDifference >= 4 && gradient < standardGradient) {
+      return "stable";
+    } else if (pressureDifference < 4 && pressureDifference > -4) {
+      return "stable";
+    } else if (pressureDifference <= -4 && gradient < standardGradient) {
+      return "stable";
+    } else if (pressureDifference <= -4 && gradient >= standardGradient) {
+      return "falling";
+    }
   }
-} catch {
-  return "--"
-}
-
 }
 
 function getCurrentIcon(trend) {
@@ -43,17 +49,17 @@ function getCurrentIcon(trend) {
   if (trend === "falling") {
     return fallIcon;
   } else {
-    return hourGlass
+    return hourGlass;
   }
 }
 
 export default function TrendValue(props) {
   const trend = getCurrentTrend(props.measurements);
   const icon = getCurrentIcon(trend);
-  const className= `${trend}Icon`
+  const className = `${trend}Icon`;
   return (
     <Fragment>
-      <img className={className} src={icon} alt=""/>
+      <img className={className} src={icon} alt="" />
       <p className="trendText">
         <b>{trend}</b>
       </p>
